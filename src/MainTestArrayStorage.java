@@ -13,14 +13,21 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.uuid = "uuid3";
 
+        // resume for update
+        Resume r4 = new Resume();
+        r4.uuid = "uuid1";
+
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.uuid));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.uuid) + "\n");
+        System.out.println("Size: " + ARRAY_STORAGE.size() + "\n");
+
+        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy") + "\n");
+
+        ARRAY_STORAGE.update(r4);
 
         printAll();
         ARRAY_STORAGE.delete(r1.uuid);
