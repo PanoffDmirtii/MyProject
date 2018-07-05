@@ -7,9 +7,6 @@ import java.util.Arrays;
 public class ArrayStorage {
     Resume[] storage = new Resume[10_000];
 
-    /**
-     * added new variable
-     */
     private int size;
 
     void clear() {
@@ -57,9 +54,11 @@ public class ArrayStorage {
     void delete(String uuid) {
         int index = indexOfResume(uuid);
         if (index != -1){
-            System.arraycopy(storage, index+1, storage, index, size-1-index);
+            storage[index] = storage[size-1];
+            storage[size-1] = null;
+           // System.arraycopy(storage, index+1, storage, index, size-1-index);
             size--;
-            System.out.println("resume delete");
+            System.out.println("resume '"  + uuid + "'  delete");
         }
         else {
             System.out.println("resume not found");
@@ -76,7 +75,7 @@ public class ArrayStorage {
     }
 
     /**
-     * Check in resume in storage
+     * Check resume in storage
      * @return i if storage contain resume
      *        -1 if not found
      */
