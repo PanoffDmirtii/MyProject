@@ -49,7 +49,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void update(Resume r) {
         int index = indexOfResume(r.getUuid());
-        if (index != -1){
+        if (index >= 0){
             storage[index] = r;
             System.out.println(storage[index].toString() + " is update");
         }
