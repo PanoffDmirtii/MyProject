@@ -31,6 +31,7 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = indexOfResume(uuid);
         if (index >= 0){
             deleteFromStorage(index);
+            storage[size-1] = null;
             size--;
             System.out.println("resume '"  + uuid + "'  delete");
         }
@@ -61,7 +62,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         int index = indexOfResume(uuid);
-        if (index != -1){
+        if (index >= 0){
             System.out.println("resume: " + uuid);
             return storage[index];
         }
