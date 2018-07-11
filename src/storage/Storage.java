@@ -2,7 +2,7 @@ package storage;
 
 import model.Resume;
 
-public interface IStorage {
+public interface Storage {
     void clear();
 
     void update(Resume r);

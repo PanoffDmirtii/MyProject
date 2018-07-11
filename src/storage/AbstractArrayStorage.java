@@ -1,12 +1,43 @@
 package storage;
 
 import model.Resume;
+
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements IStorage {
-    protected static final int STORAGE_LIMIT = 3;
+public abstract class AbstractArrayStorage implements Storage {
+    protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
+
+    @Override
+    public void save(Resume r) {
+        if (size != storage.length) {
+            int index = indexOfResume(r.getUuid());
+            if (index < 0) {
+                putInStorage(index, r);
+                size++;
+            }
+            else {
+                System.out.println(r + " has already in storage");
+            }
+        }
+        else {
+            System.out.println("Storage overflow");
+        }
+    }
+
+    @Override
+    public void delete(String uuid) {
+        int index = indexOfResume(uuid);
+        if (index >= 0){
+            deleteFromStorage(index);
+            size--;
+            System.out.println("resume '"  + uuid + "'  delete");
+        }
+        else {
+            System.out.println("resume not found");
+        }
+    }
 
     @Override
     public void clear() {
@@ -51,8 +82,7 @@ public abstract class AbstractArrayStorage implements IStorage {
         return size;
     }
 
-
-
     protected abstract int indexOfResume(String uuid);
-
+    protected abstract void deleteFromStorage(int index);
+    protected abstract void putInStorage(int index, Resume r);
 }

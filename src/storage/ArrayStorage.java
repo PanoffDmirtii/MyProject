@@ -7,34 +7,10 @@ import model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume r) {
-        if (size != storage.length) {
-            int index = indexOfResume(r.getUuid());
-            if (index == -1) {
-                storage[size++] = r;
-                System.out.println(r + " save in storage");
-            }
-            else {
-                System.out.println(r + " has already in storage");
-            }
-        }
-        else {
-            System.out.println("Storage overflow");
-        }
-    }
-
-    public void delete(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index != -1){
-            storage[index] = storage[size-1];
-            storage[size-1] = null;
-            size--;
-            System.out.println("resume '"  + uuid + "'  delete");
-        }
-        else {
-            System.out.println("resume not found");
-        }
-
+    @Override
+    protected void deleteFromStorage(int index) {
+        storage[index] = storage[size-1];
+        storage[size-1] = null;
     }
 
     /**
@@ -51,7 +27,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    public int size() {
-        return size;
+    @Override
+    protected void putInStorage(int index, Resume r) {
+        storage[size] = r;
+        System.out.println(r + " save in storage");
     }
+
 }
