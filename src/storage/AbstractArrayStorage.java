@@ -1,11 +1,14 @@
 package storage;
 
+import exceptions.ExistUuidException;
+import exceptions.NotExistUuidException;
+import exceptions.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
@@ -18,11 +21,11 @@ public abstract class AbstractArrayStorage implements Storage {
                 size++;
             }
             else {
-                System.out.println(r + " has already in storage");
+                throw new ExistUuidException(r.getUuid());
             }
         }
         else {
-            System.out.println("Storage overflow");
+            throw new StorageException(r.getUuid(), "Storage overflow");
         }
     }
 
@@ -36,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("resume '"  + uuid + "'  delete");
         }
         else {
-            System.out.println("resume not found");
+            throw new NotExistUuidException(uuid);
         }
     }
 
@@ -55,7 +58,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println(storage[index].toString() + " is update");
         }
         else {
-            System.out.println("resume not found");
+            throw new NotExistUuidException(r.getUuid());
         }
     }
 
@@ -66,8 +69,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("resume: " + uuid);
             return storage[index];
         }
-        System.out.println("resume not found");
-        return null;
+        throw new NotExistUuidException(uuid);
     }
 
     /**
