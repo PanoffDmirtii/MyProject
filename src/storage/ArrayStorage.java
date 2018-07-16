@@ -2,14 +2,11 @@ package storage;
 
 import model.Resume;
 
-/**
- * Array based storage for Resumes
- */
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteFromStorage(int index) {
-        storage[index] = storage[size-1];
+        storage[index] = storage[size - 1];
     }
 
     /**
@@ -27,9 +24,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void putInStorage(int index, Resume r) {
-        storage[size] = r;
-        System.out.println(r + " save in storage");
+    protected void putInStorage(int index, Resume resume) {
+        storage[size] = resume;
     }
 
 }

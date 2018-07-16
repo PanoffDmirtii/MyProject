@@ -1,14 +1,14 @@
 package model;
 
-/**
- * com.urise.webapp.model.model.Resume class
- */
+import java.util.UUID;
+
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
 
     public Resume() {
+        this(UUID.randomUUID().toString());
     }
 
     public Resume(String uuid) {

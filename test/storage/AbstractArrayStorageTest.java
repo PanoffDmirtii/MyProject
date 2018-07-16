@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class AbstractArrayStorageTest {
     private Storage storage;
+    private Resume resume = new Resume("uuid_4");
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -22,47 +23,54 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
-
     }
 
     @Test
-    public void save() throws Exception {
-        storage.save(new Resume("uuid_4"));
+    public void save() {
+        storage.save(resume);
         Assert.assertEquals(4, storage.size());
+        //storage.save(resume);
     }
 
     @Test
-    public void delete() throws Exception {
-        storage.delete(UUID_2);
-        Assert.assertEquals(2, storage.size());
+    public void delete() {
+        storage.save(resume);
+        storage.delete(resume.getUuid());
+        Assert.assertEquals(3, storage.size());
+        //Assert.assertNotEquals(resume, storage.get(resume.getUuid()));
+        //Assert.assertEquals(resume, storage.get("TEST"));
     }
 
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         storage.clear();
         Assert.assertEquals(0, storage.size());
     }
 
     @Test
-    public void update() throws Exception {
-        Resume r = new Resume("uuid_3");
-        storage.update(r);
-        Assert.assertEquals(r,storage.get(r.getUuid()));
+    public void update() {
+        storage.save(resume);
+        storage.update(resume);
+        Assert.assertEquals(resume,storage.get("uuid_4"));
     }
 
     @Test
-    public void get() throws Exception {
-        Assert.assertEquals("uuid_2",storage.get(UUID_2).getUuid());
+    public void get() {
+        storage.save(resume);
+        Assert.assertEquals(resume, storage.get("uuid_4"));
+        //Assert.assertEquals(resume, storage.get(UUID_1));
+        //Assert.assertEquals(resume, storage.get("TEST"));
+
     }
 
     @Test
-    public void getAll() throws Exception {
-        Resume[] storResume = storage.getAll();
-        Assert.assertArrayEquals(storResume, storage.getAll());
+    public void getAll() {
+        Resume[] testStorage = {new Resume(UUID_1),new Resume(UUID_2), new Resume(UUID_3)};
+        Assert.assertArrayEquals(testStorage, storage.getAll());
     }
 
     @Test
-    public void size() throws Exception {
+    public void size() {
         Assert.assertEquals(3, storage.size());
     }
 

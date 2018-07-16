@@ -11,5 +11,7 @@ public class MainReflection {
         System.out.println(field.get(r));
         field.set(r, "testUUID");
         System.out.println(r);
+
+
     }
 }

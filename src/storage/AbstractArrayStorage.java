@@ -13,19 +13,18 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size = 0;
 
     @Override
-    public void save(Resume r) {
+    public void save(Resume resume) {
         if (size != storage.length) {
-            int index = indexOfResume(r.getUuid());
+            int index = indexOfResume(resume.getUuid());
             if (index < 0) {
-                putInStorage(index, r);
+                putInStorage(index, resume);
+                System.out.println("resume '"  + resume.getUuid() + "'  save in storage");
                 size++;
+            } else {
+                throw new ExistUuidException(resume.getUuid());
             }
-            else {
-                throw new ExistUuidException(r.getUuid());
-            }
-        }
-        else {
-            throw new StorageException(r.getUuid(), "Storage overflow");
+        } else {
+            throw new StorageException(resume.getUuid(), "Storage overflow");
         }
     }
 
@@ -34,11 +33,10 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = indexOfResume(uuid);
         if (index >= 0){
             deleteFromStorage(index);
-            storage[size-1] = null;
+            storage[size - 1] = null;
             size--;
             System.out.println("resume '"  + uuid + "'  delete");
-        }
-        else {
+        } else {
             throw new NotExistUuidException(uuid);
         }
     }
@@ -51,14 +49,13 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void update(Resume r) {
-        int index = indexOfResume(r.getUuid());
+    public void update(Resume resume) {
+        int index = indexOfResume(resume.getUuid());
         if (index >= 0){
-            storage[index] = r;
-            System.out.println(storage[index].toString() + " is update");
-        }
-        else {
-            throw new NotExistUuidException(r.getUuid());
+            storage[index] = resume;
+            System.out.println(storage[index].getUuid() + " is update");
+        } else {
+            throw new NotExistUuidException(resume.getUuid());
         }
     }
 
@@ -77,7 +74,7 @@ public abstract class AbstractArrayStorage implements Storage {
      */
     @Override
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     @Override
@@ -87,5 +84,5 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int indexOfResume(String uuid);
     protected abstract void deleteFromStorage(int index);
-    protected abstract void putInStorage(int index, Resume r);
+    protected abstract void putInStorage(int index, Resume resume);
 }
