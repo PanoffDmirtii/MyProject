@@ -18,13 +18,12 @@ public class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
-    private static Resume resume_1 = new Resume(UUID_1);
-    private Resume resume_4 = new Resume("uuid_4");
+    private static Resume resumeUpdate = new Resume(UUID_1);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         storage.clear();
-        storage.save(resume_1);
+        storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
     }
@@ -32,7 +31,7 @@ public class AbstractArrayStorageTest {
     @Test
     public void save() {
         try {
-            storage.save(resume_1);
+            storage.save(new Resume(UUID_3));
             Assert.assertEquals(4, storage.size());
         } catch (ExistUuidException e){
             System.out.println(e);
@@ -61,8 +60,8 @@ public class AbstractArrayStorageTest {
     @Test
     public void update() {
         try {
-            storage.update(resume_1);
-            Assert.assertEquals(resume_1,storage.get("TEST"));
+            storage.update(resumeUpdate);
+            Assert.assertEquals(resumeUpdate ,storage.get(UUID_1));
         }catch (NotExistUuidException e){
             System.out.println(e);
         }
@@ -71,7 +70,7 @@ public class AbstractArrayStorageTest {
     @Test
     public void get() {
         try {
-            Assert.assertEquals(resume_1,storage.get(UUID_1));
+            Assert.assertEquals(new Resume(UUID_1),storage.get(UUID_1));
         } catch (NotExistUuidException e){
             System.out.println(e);
         }
