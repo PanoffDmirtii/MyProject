@@ -1,6 +1,5 @@
 package storage;
 
-import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
 import exceptions.StorageException;
 import model.Resume;
@@ -18,7 +17,6 @@ public class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
-    private static Resume resumeUpdate = new Resume(UUID_1);
 
     @Before
     public void setUp() {
@@ -28,27 +26,15 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
-    @Test
+
+    @Test (expected = StorageException.class)
     public void save() {
-        try {
-            storage.save(new Resume(UUID_3));
-            Assert.assertEquals(4, storage.size());
-        } catch (ExistUuidException e){
-            System.out.println(e);
-        } catch (StorageException e){
-            System.out.println("Storage overflow");
-        }
+        storage.save(new Resume("TEST1"));
     }
 
-    @Test
+    @Test (expected = NotExistUuidException.class)
     public void delete() {
-        try {
-            storage.delete("TEST");
-            Assert.assertEquals(2, storage.size());
-        } catch (NotExistUuidException e){
-            System.out.println(e);
-        }
-
+        storage.delete("TEST");
     }
 
     @Test
@@ -57,23 +43,14 @@ public class AbstractArrayStorageTest {
         Assert.assertEquals(0, storage.size());
     }
 
-    @Test
+    @Test (expected = NotExistUuidException.class)
     public void update() {
-        try {
-            storage.update(resumeUpdate);
-            Assert.assertEquals(resumeUpdate ,storage.get(UUID_1));
-        }catch (NotExistUuidException e){
-            System.out.println(e);
-        }
+        storage.update(new Resume("TEST"));
     }
 
-    @Test
+    @Test (expected = NotExistUuidException.class)
     public void get() {
-        try {
-            Assert.assertEquals(new Resume(UUID_1),storage.get(UUID_1));
-        } catch (NotExistUuidException e){
-            System.out.println(e);
-        }
+        storage.get("TEST");
     }
 
     @Test
