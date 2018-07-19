@@ -26,11 +26,18 @@ public class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
-
     @Test (expected = StorageException.class)
     public void save() {
-        storage.save(new Resume("TEST1"));
+        try {
+            for (int i = 3; i <10000 ; i++) {
+                storage.save(new Resume("uuid_" + (i+1)));
+            }
+        } catch (StorageException e) {
+            Assert.fail();
+        }
+        storage.save(new Resume("OVERFLOW"));
     }
+
 
     @Test (expected = NotExistUuidException.class)
     public void delete() {
