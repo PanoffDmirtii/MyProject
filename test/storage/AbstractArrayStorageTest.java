@@ -17,6 +17,9 @@ public class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
+    private static final String UUID_EXCEP = "EXCEPTION";
+    private static final Resume TEST_UUID_3 = new Resume(UUID_3);
+
 
     @Before
     public void setUp() {
@@ -29,11 +32,11 @@ public class AbstractArrayStorageTest {
     @Test (expected = StorageException.class)
     public void save() {
         try {
-            for (int i = 3; i <10000 ; i++) {
+            for (int i = storage.size(); i <AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume("uuid_" + (i+1)));
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("StorageException");
         }
         storage.save(new Resume("OVERFLOW"));
     }
@@ -41,7 +44,9 @@ public class AbstractArrayStorageTest {
 
     @Test (expected = NotExistUuidException.class)
     public void delete() {
-        storage.delete("TEST");
+        storage.delete(UUID_2);
+        Assert.assertEquals(2, storage.size());
+        storage.delete(UUID_EXCEP);
     }
 
     @Test
@@ -52,12 +57,15 @@ public class AbstractArrayStorageTest {
 
     @Test (expected = NotExistUuidException.class)
     public void update() {
-        storage.update(new Resume("TEST"));
+        storage.update(TEST_UUID_3);
+        Assert.assertEquals(TEST_UUID_3, storage.get(UUID_3));
+        storage.update(new Resume(UUID_EXCEP));
     }
 
     @Test (expected = NotExistUuidException.class)
     public void get() {
-        storage.get("TEST");
+        Assert.assertEquals(new Resume(UUID_3), storage.get(UUID_3));
+        storage.get(UUID_EXCEP);
     }
 
     @Test
