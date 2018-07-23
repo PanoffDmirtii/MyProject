@@ -19,8 +19,8 @@ public abstract class  AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
     private static final String UUID_4 = "uuid_4";
-    private static final Resume UPDATE_UUID_3 = new Resume(UUID_3);
-    private static final Resume UUID_EXCEPTION = new Resume("EXCEPTION");
+    private static final Resume UPDATE_RESUME = new Resume(UUID_3);
+    private static final Resume TEST_EXCEPTION = new Resume("EXCEPTION");
 
 
     @Before
@@ -39,23 +39,24 @@ public abstract class  AbstractArrayStorageTest {
 
     @Test (expected = ExistUuidException.class)
     public void saveExistResume() {
-        storage.save(UPDATE_UUID_3);
+        storage.save(UPDATE_RESUME);
     }
 
     @Test (expected = StorageException.class)
     public void saveOverFlow() {
-        for (int i = storage.size() + 1; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-            storage.save(new Resume("uuid_" + i));
-            if (storage.size() > AbstractArrayStorage.STORAGE_LIMIT) {
-                Assert.fail("OVERFLOW");
+        try {
+            for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+                storage.save(new Resume("uuid_" + (i+1)));
             }
+        } catch (Exception e) {
+            Assert.fail("OVERFLOW");
         }
-        storage.save(UUID_EXCEPTION);
+        storage.save(TEST_EXCEPTION);
     }
 
     @Test (expected = NotExistUuidException.class)
     public void deleteNotExistResume() {
-        storage.delete(UUID_EXCEPTION.getUuid());
+        storage.delete(TEST_EXCEPTION.getUuid());
     }
 
     @Test
@@ -72,23 +73,23 @@ public abstract class  AbstractArrayStorageTest {
 
     @Test
     public void updateExistResume() {
-        storage.update(UPDATE_UUID_3);
-        Assert.assertEquals(UPDATE_UUID_3, storage.get(UUID_3));
+        storage.update(UPDATE_RESUME);
+        Assert.assertEquals(UPDATE_RESUME, storage.get(UUID_3));
     }
 
     @Test (expected = NotExistUuidException.class)
     public void updateNotExistResume() {
-        storage.update(UUID_EXCEPTION);
+        storage.update(TEST_EXCEPTION);
     }
 
     @Test (expected = NotExistUuidException.class)
     public void getNotExistResume() {
-        storage.get(UUID_EXCEPTION.getUuid());
+        storage.get(TEST_EXCEPTION.getUuid());
     }
 
     @Test
     public void getExistResume() {
-        Assert.assertEquals(UPDATE_UUID_3, storage.get(UUID_3));
+        Assert.assertEquals(UPDATE_RESUME, storage.get(UUID_3));
     }
 
     @Test
