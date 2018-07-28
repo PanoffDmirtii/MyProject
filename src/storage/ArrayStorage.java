@@ -7,6 +7,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void deleteFromStorage(int index) {
         storage[index] = storage[size - 1];
+        storage[size - 1] = null;
+    }
+
+    @Override
+    protected void updateResume(int index, Resume resume) {
+        storage[index] = resume;
     }
 
     /**

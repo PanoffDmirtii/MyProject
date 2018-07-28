@@ -1,31 +1,14 @@
 package storage;
 
 import exceptions.ExistUuidException;
-import exceptions.NotExistUuidException;
 import model.Resume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListStorage extends AbstractStorage{
     protected List<Resume> storage = new ArrayList<>();
-
-
-    @Override
-    public void clearStorage() {
-        storage.removeAll(storage);
-    }
-
-
-    @Override
-    public void update(Resume updateResume) {
-        if (storage.contains(updateResume)){
-            storage.set(storage.indexOf(updateResume), updateResume);
-            System.out.println(updateResume.getUuid() + " is update");
-        } else {
-            throw new NotExistUuidException(updateResume.getUuid());
-        }
-    }
 
     @Override
     public void save(Resume newResume) {
@@ -39,30 +22,37 @@ public class ListStorage extends AbstractStorage{
     }
 
     @Override
-    public Resume get(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.getUuid().equals(uuid)){
-                System.out.println("resume: " + uuid);
-                return resume;
-            }
-        }
-        throw new NotExistUuidException(uuid);
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = storage.indexOf(new Resume(uuid));
-        if (index >= 0){
-            storage.remove(index);
-            size--;
-            System.out.println("resume '"  + uuid + "'  delete");
-        } else {
-            throw new NotExistUuidException(uuid);
-        }
+    protected Resume getResume(int index) {
+        return storage.get(index);
     }
 
     @Override
     public Resume[] getAll() {
         return storage.toArray(new Resume[storage.size()]);
+    }
+
+    @Override
+    public void clearStorage() {
+        storage.removeAll(storage);
+    }
+
+    @Override
+    protected int indexOfResume(String uuid) {
+        for (Resume resume : storage) {
+            if (Objects.equals(resume.getUuid(), uuid)){
+                return storage.indexOf(resume);
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    protected void deleteFromStorage(int index) {
+        storage.remove(index);
+    }
+
+    @Override
+    protected void updateResume(int index, Resume resume) {
+        storage.set(index, resume);
     }
 }

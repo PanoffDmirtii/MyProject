@@ -3,7 +3,6 @@ package storage;
 
 import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
-import exceptions.StorageException;
 import model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,18 +41,6 @@ public abstract class AbstractStorageTest {
     public void saveExistResume() {
         storage.save(UPDATE_RESUME);
     }
-
-//    @Test(expected = StorageException.class)
-//    public void saveOverFlow() {
-//        try {
-//            for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-//                storage.save(new Resume("uuid_" + (i + 1)));
-//            }
-//        } catch (Exception e) {
-//            Assert.fail("OVERFLOW");
-//        }
-//        storage.save(TEST_EXCEPTION);
-//    }
 
     @Test(expected = NotExistUuidException.class)
     public void deleteNotExistResume() {

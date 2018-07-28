@@ -1,7 +1,6 @@
 package storage;
 
 import exceptions.ExistUuidException;
-import exceptions.NotExistUuidException;
 import exceptions.StorageException;
 import model.Resume;
 
@@ -12,53 +11,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     @Override
-    public void save(Resume resume) {
+    public void save(Resume newResume) {
         if (size != storage.length) {
-            int index = indexOfResume(resume.getUuid());
+            int index = indexOfResume(newResume.getUuid());
             if (index < 0) {
-                putInStorage(index, resume);
-                System.out.println("resume '"  + resume.getUuid() + "'  save in storage");
+                putInStorage(index, newResume);
+                System.out.println("resume '"  + newResume.getUuid() + "'  save in storage");
                 size++;
             } else {
-                throw new ExistUuidException(resume.getUuid());
+                throw new ExistUuidException(newResume.getUuid());
             }
         } else {
-            throw new StorageException(resume.getUuid(), "Storage overflow");
+            throw new StorageException(newResume.getUuid(), "Storage overflow");
         }
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
-            deleteFromStorage(index);
-            storage[size - 1] = null;
-            size--;
-            System.out.println("resume '"  + uuid + "'  delete");
-        } else {
-            throw new NotExistUuidException(uuid);
-        }
-    }
-
-    @Override
-    public void update(Resume resume) {
-        int index = indexOfResume(resume.getUuid());
-        if (index >= 0){
-            storage[index] = resume;
-            System.out.println(storage[index].getUuid() + " is update");
-        } else {
-            throw new NotExistUuidException(resume.getUuid());
-        }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
-            System.out.println("resume: " + uuid);
-            return storage[index];
-        }
-        throw new NotExistUuidException(uuid);
+    protected Resume getResume(int index) {
+        return storage[index];
     }
 
     /**

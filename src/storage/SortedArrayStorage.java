@@ -11,6 +11,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
+    protected void updateResume(int index, Resume resume) {
+        storage[index] = resume;
+    }
+
+    @Override
     protected int indexOfResume(String uuid) {
         Resume key = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, key);
