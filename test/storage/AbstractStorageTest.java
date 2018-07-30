@@ -19,6 +19,9 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
     private static final String UUID_4 = "uuid_4";
+    private static final Resume resume_1 = new Resume(UUID_1);
+    private static final Resume resume_2 = new Resume(UUID_2);
+    private static final Resume resume_3 = new Resume(UUID_3);
     private static final Resume UPDATE_RESUME = new Resume(UUID_3);
     protected static final Resume TEST_EXCEPTION = new Resume("EXCEPTION");
 
@@ -82,7 +85,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] testStorage = {storage.get(UUID_1), storage.get(UUID_2), storage.get(UUID_3)};
+        Resume[] testStorage = {resume_1, resume_2, resume_3};
         Assert.assertArrayEquals(testStorage, storage.getAll());
     }
 

@@ -1,16 +1,25 @@
 package storage;
 
+import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
 import model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected int size = 0;
+
+    @Override
+    public void save(Resume resume) {
+        if (checkResume(resume.getUuid()) < 0){
+            saveResume(resume);
+            System.out.println("Resume " + resume.getUuid() + " save in storage");
+        } else {
+            throw new ExistUuidException(resume.getUuid());
+        }
+    }
 
     @Override
     public void update(Resume resume) {
-        int index = indexOfResume(resume.getUuid());
-        if (index >= 0){
-            updateResume(index, resume);
+        if (checkResume(resume.getUuid()) >= 0){
+            updateResume(resume);
             System.out.println(resume.getUuid() + " is update");
         } else {
             throw new NotExistUuidException(resume.getUuid());
@@ -19,10 +28,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
-            deleteFromStorage(index);
-            size--;
+        if (checkResume(uuid) >= 0){
+            deleteFromStorage(uuid);
             System.out.println("resume '"  + uuid + "'  delete");
         } else {
             throw new NotExistUuidException(uuid);
@@ -31,29 +38,17 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
+        if (checkResume(uuid) >= 0){
             System.out.println("resume: " + uuid);
-            return getResume(index);
+            return getResume(uuid);
         }
         throw new NotExistUuidException(uuid);
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
+    protected abstract void saveResume(Resume resume);
+    protected abstract int checkResume(String uuid);
+    protected abstract Resume getResume(String uuid);
+    protected abstract void deleteFromStorage(String uuid);
+    protected abstract void updateResume(Resume resume);
 
-    @Override
-    public void clear() {
-        clearStorage();
-        size = 0;
-        System.out.println("storage empty");
-    }
-
-    protected abstract void clearStorage();
-    protected abstract Resume getResume(int index);
-    protected abstract void deleteFromStorage(int index);
-    protected abstract void updateResume(int index, Resume resume);
-    protected abstract int indexOfResume(String uuid);
 }

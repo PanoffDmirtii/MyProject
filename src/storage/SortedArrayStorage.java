@@ -1,18 +1,14 @@
 package storage;
 
 import model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void deleteFromStorage(int index) {
+    protected void deleteResume(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
-    }
-
-    @Override
-    protected void updateResume(int index, Resume resume) {
-        storage[index] = resume;
     }
 
     @Override
