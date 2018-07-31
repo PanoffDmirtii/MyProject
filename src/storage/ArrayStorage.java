@@ -5,7 +5,7 @@ import model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void deleteResume(int index) {
+    protected void deleteFromStorage(int index) {
         storage[index] = storage[size - 1];
     }
 
@@ -14,7 +14,7 @@ public class ArrayStorage extends AbstractArrayStorage {
      * @return i if storage contain resume
      *        -1 if not found
      */
-    protected int indexOfResume(String uuidFound) {
+    protected int getIndex(String uuidFound) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuidFound)) {
                 return i;

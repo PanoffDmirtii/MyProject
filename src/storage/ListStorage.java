@@ -9,42 +9,26 @@ public class ListStorage extends AbstractStorage{
     private List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean checkAndUpdateResume(Resume updateResume) {
-        int index = indexOfResume(updateResume.getUuid());
-        if (index >= 0){
-            storage.set(index, updateResume);
-            return true;
-        }
-        return false;
+    protected void saveResume(Resume resume) {
+        storage.add(resume);
     }
 
     @Override
-    protected boolean checkAndSaveResume(Resume newResume) {
-        int index = indexOfResume(newResume.getUuid());
-        if (index < 0){
-            storage.add(newResume);
-            return true;
-        }
-        return false;
+    protected void deleteResume(String uuid) {
+        int index = getIndex(uuid);
+        storage.remove(index);
     }
 
     @Override
-    protected boolean checkAndDeleteResume(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
-            storage.remove(index);
-            return true;
-        }
-        return false;
+    protected void updateResume(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        storage.set(index, resume);
     }
 
     @Override
     protected Resume getResume(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0){
-            return storage.get(index);
-        }
-        return null;
+        int index = getIndex(uuid);
+        return storage.get(index);
     }
 
     @Override
@@ -55,6 +39,7 @@ public class ListStorage extends AbstractStorage{
     @Override
     public void clear() {
         storage.removeAll(storage);
+        System.out.println("storage empty");
     }
 
     @Override
@@ -62,9 +47,10 @@ public class ListStorage extends AbstractStorage{
         return storage.size();
     }
 
-    private int indexOfResume(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.getUuid().equals(uuid)) {
+    @Override
+    protected int getIndex(String uuid) {
+        for (Resume resume : storage){
+            if (resume.getUuid().equals(uuid)){
                 return storage.indexOf(resume);
             }
         }
