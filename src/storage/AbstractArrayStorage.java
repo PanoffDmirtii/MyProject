@@ -11,27 +11,49 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void saveResume(Resume resume) {
-        if (storage.length != size){
-            int index = indexOfResume(resume.getUuid());
-            putInStorage(index, resume);
-            size++;
-        } else {
-            throw new StorageException("OverFlow", resume.getUuid());
+    protected boolean checkAndUpdateResume(Resume updateResume) {
+        int index = indexOfResume(updateResume.getUuid());
+        if (index >= 0){
+            storage[index] = updateResume;
+            return true;
         }
+        return false;
     }
 
     @Override
-    protected void deleteFromStorage(String uuid) {
+    protected boolean checkAndSaveResume(Resume resume) {
+        int index = indexOfResume(resume.getUuid());
+        if (index < 0){
+            if (storage.length != size){
+                putInStorage(index, resume);
+                size++;
+                return true;
+            } else {
+                throw new StorageException("OverFlow", resume.getUuid());
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean checkAndDeleteResume(String uuid) {
         int index = indexOfResume(uuid);
-        deleteResume(index);
-        size--;
+        if (index >= 0){
+            deleteResume(index);
+            storage[size - 1] = null;
+            size--;
+            return true;
+        }
+        return false;
     }
 
     @Override
     protected Resume getResume(String uuid) {
         int index = indexOfResume(uuid);
-        return storage[index];
+        if (index >= 0) {
+            return storage[index];
+        }
+        return null;
     }
 
     /**
@@ -52,17 +74,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    protected int checkResume(String uuid) {
-        return indexOfResume(uuid);
-    }
-
-    @Override
-    protected void updateResume(Resume resume) {
-        int index = indexOfResume(resume.getUuid());
-        storage[index] = resume;
     }
 
     protected abstract void deleteResume(int index);

@@ -9,19 +9,47 @@ public class ListStorage extends AbstractStorage{
     private List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected void saveResume(Resume resume) {
-        storage.add(resume);
+    protected boolean checkAndUpdateResume(Resume updateResume) {
+        int index = indexOfResume(updateResume.getUuid());
+        if (index >= 0){
+            storage.set(index, updateResume);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean checkAndSaveResume(Resume newResume) {
+        int index = indexOfResume(newResume.getUuid());
+        if (index < 0){
+            storage.add(newResume);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean checkAndDeleteResume(String uuid) {
+        int index = indexOfResume(uuid);
+        if (index >= 0){
+            storage.remove(index);
+            return true;
+        }
+        return false;
     }
 
     @Override
     protected Resume getResume(String uuid) {
-        int index = checkResume(uuid);
-        return storage.get(index);
+        int index = indexOfResume(uuid);
+        if (index >= 0){
+            return storage.get(index);
+        }
+        return null;
     }
 
     @Override
     public Resume[] getAll() {
-        return storage.toArray(new Resume[storage.size()]);
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
@@ -30,28 +58,16 @@ public class ListStorage extends AbstractStorage{
     }
 
     @Override
-    protected void deleteFromStorage(String uuid) {
-        int index = checkResume(uuid);
-        storage.remove(index);
+    public int size() {
+        return storage.size();
     }
 
-    @Override
-    protected int checkResume(String uuid) {
-        for (Resume resume : storage){
-            if (resume.getUuid().equals(uuid)){
+    private int indexOfResume(String uuid) {
+        for (Resume resume : storage) {
+            if (resume.getUuid().equals(uuid)) {
                 return storage.indexOf(resume);
             }
         }
         return -1;
-    }
-
-    @Override
-    protected void updateResume(Resume resume) {
-        storage.set(storage.indexOf(resume), resume);
-    }
-
-    @Override
-    public int size() {
-        return storage.size();
     }
 }

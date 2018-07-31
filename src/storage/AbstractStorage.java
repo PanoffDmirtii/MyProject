@@ -8,8 +8,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        if (checkResume(resume.getUuid()) < 0){
-            saveResume(resume);
+        if (checkAndSaveResume(resume)){
             System.out.println("Resume " + resume.getUuid() + " save in storage");
         } else {
             throw new ExistUuidException(resume.getUuid());
@@ -18,8 +17,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        if (checkResume(resume.getUuid()) >= 0){
-            updateResume(resume);
+        if (checkAndUpdateResume(resume)){
             System.out.println(resume.getUuid() + " is update");
         } else {
             throw new NotExistUuidException(resume.getUuid());
@@ -28,8 +26,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        if (checkResume(uuid) >= 0){
-            deleteFromStorage(uuid);
+        if (checkAndDeleteResume(uuid)){
             System.out.println("resume '"  + uuid + "'  delete");
         } else {
             throw new NotExistUuidException(uuid);
@@ -38,17 +35,15 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        if (checkResume(uuid) >= 0){
+        Resume outputResume = getResume(uuid);
+        if (outputResume != null){
             System.out.println("resume: " + uuid);
-            return getResume(uuid);
+            return outputResume;
         }
         throw new NotExistUuidException(uuid);
     }
-
-    protected abstract void saveResume(Resume resume);
-    protected abstract int checkResume(String uuid);
+    protected abstract boolean checkAndSaveResume(Resume resume);
+    protected abstract boolean checkAndUpdateResume(Resume resume);
+    protected abstract boolean checkAndDeleteResume(String uuid);
     protected abstract Resume getResume(String uuid);
-    protected abstract void deleteFromStorage(String uuid);
-    protected abstract void updateResume(Resume resume);
-
 }
