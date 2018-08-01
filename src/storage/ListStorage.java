@@ -15,19 +15,19 @@ public class ListStorage extends AbstractStorage{
 
     @Override
     protected void deleteResume(String uuid) {
-        int index = getIndex(uuid);
+        int index = getKeyIfExist(uuid);
         storage.remove(index);
     }
 
     @Override
     protected void updateResume(Resume resume) {
-        int index = getIndex(resume.getUuid());
+        int index = getKeyIfExist(resume.getUuid());
         storage.set(index, resume);
     }
 
     @Override
     protected Resume getResume(String uuid) {
-        int index = getIndex(uuid);
+        int index = getKeyIfExist(uuid);
         return storage.get(index);
     }
 

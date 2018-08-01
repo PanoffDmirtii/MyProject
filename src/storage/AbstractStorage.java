@@ -8,9 +8,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0){
-            throw new ExistUuidException(resume.getUuid());
-        } else {
+        if (getKeyIfNotExist(resume.getUuid()) < 0) {
             saveResume(resume);
             System.out.println("Resume " + resume.getUuid() + " save in storage");
         }
@@ -45,6 +43,14 @@ public abstract class AbstractStorage implements Storage {
             return index;
         }
         throw new NotExistUuidException(uuid);
+    }
+
+    protected int getKeyIfNotExist(String uuid){
+        int index = getIndex(uuid);
+        if (index < 0){
+            return index;
+        }
+        throw new ExistUuidException(uuid);
     }
 
     protected abstract void saveResume(Resume resume);
