@@ -8,26 +8,24 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        if (getKeyIfNotExist(resume.getUuid()) < 0) {
-            saveResume(resume);
-            System.out.println("Resume " + resume.getUuid() + " save in storage");
-        }
+        getKeyIfNotExist(resume.getUuid());
+        saveResume(resume);
+        System.out.println("Resume " + resume.getUuid() + " save in storage");
     }
 
     @Override
     public void delete(String uuid) {
-        if (getKeyIfExist(uuid) >= 0 ){
-            deleteResume(uuid);
-            System.out.println("Resume " + uuid + " delete from storage");
-        }
+        getKeyIfExist(uuid);
+        deleteResume(uuid);
+        System.out.println("Resume " + uuid + " delete from storage");
+
     }
 
     @Override
     public void update(Resume resume) {
-        if (getKeyIfExist(resume.getUuid()) >= 0){
-            updateResume(resume);
-            System.out.println("Resume " + resume.getUuid() + " update in storage");
-        }
+       getKeyIfExist(resume.getUuid());
+       updateResume(resume);
+       System.out.println("Resume " + resume.getUuid() + " update in storage");
     }
 
     @Override

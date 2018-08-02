@@ -8,6 +8,8 @@ import java.util.Map;
 public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storage = new HashMap<>();
 
+
+
     @Override
     protected void saveResume(Resume resume) {
         storage.put(resume.getUuid(), resume);
