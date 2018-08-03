@@ -8,52 +8,51 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
-        getKeyIfNotExist(resume.getUuid());
-        saveResume(resume);
+        saveResume(getKeyIfNotExist(resume.getUuid()), resume);
         System.out.println("Resume " + resume.getUuid() + " save in storage");
     }
 
     @Override
     public void delete(String uuid) {
-        getKeyIfExist(uuid);
-        deleteResume(uuid);
+        deleteResume(getKeyIfExist(uuid));
         System.out.println("Resume " + uuid + " delete from storage");
 
     }
 
     @Override
     public void update(Resume resume) {
-       getKeyIfExist(resume.getUuid());
-       updateResume(resume);
-       System.out.println("Resume " + resume.getUuid() + " update in storage");
+        updateResume(getKeyIfExist(resume.getUuid()), resume);
+        System.out.println("Resume " + resume.getUuid() + " update in storage");
     }
 
     @Override
     public Resume get(String uuid) {
-        getKeyIfExist(uuid);
         System.out.println("Resume " + uuid);
-        return getResume(uuid);
+        return getResume(getKeyIfExist(uuid));
     }
 
-    protected int getKeyIfExist(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0){
-            return index;
+    protected Object getKeyIfExist(String uuid) {
+        Object key = getKey(uuid);
+        if (key instanceof String && uuid.equals(key) || key instanceof Integer && (Integer)key >= 0){
+            return key;
         }
         throw new NotExistUuidException(uuid);
     }
 
-    protected int getKeyIfNotExist(String uuid){
-        int index = getIndex(uuid);
-        if (index < 0){
-            return index;
+    protected Object getKeyIfNotExist(String uuid){
+        Object key = getKey(uuid);
+        if (key instanceof Integer && (Integer)key < 0){
+            return key;
+        } else if (key instanceof String && !key.equals(uuid)){
+            return uuid;
+        } else {
+            throw new ExistUuidException(uuid);
         }
-        throw new ExistUuidException(uuid);
     }
 
-    protected abstract void saveResume(Resume resume);
-    protected abstract void updateResume(Resume resume);
-    protected abstract int getIndex(String uuid);
-    protected abstract void deleteResume(String uuid);
-    protected abstract Resume getResume(String uuid);
+    protected abstract void saveResume(Object key, Resume resume);
+    protected abstract void updateResume(Object key, Resume resume);
+    protected abstract Object getKey(String uuid);
+    protected abstract void deleteResume(Object key);
+    protected abstract Resume getResume(Object key);
 }

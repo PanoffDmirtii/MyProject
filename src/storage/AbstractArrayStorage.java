@@ -11,9 +11,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    protected void saveResume(Resume resume) {
+    protected void saveResume(Object key, Resume resume) {
+        int index = (Integer) key;
         if (size != storage.length){
-            int index = getIndex(resume.getUuid());
             putInStorage(index, resume);
             size++;
         } else {
@@ -22,22 +22,22 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(String uuid) {
-        int index = getIndex(uuid);
+    protected void deleteResume(Object key) {
+        int index = (Integer) key;
         deleteFromStorage(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void updateResume(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    protected void updateResume(Object key, Resume resume) {
+        int index = (Integer) key;
         storage[index] = resume;
     }
 
     @Override
-    protected Resume getResume(String uuid) {
-        int index = getIndex(uuid);
+    protected Resume getResume(Object key) {
+        int index = (Integer) key;
         return storage[index];
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Integer getKey(String uuid);
     protected abstract void putInStorage(int index, Resume resume);
     protected abstract void deleteFromStorage(int index);
 }

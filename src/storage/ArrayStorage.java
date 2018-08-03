@@ -14,7 +14,7 @@ public class ArrayStorage extends AbstractArrayStorage {
      * @return i if storage contain resume
      *        -1 if not found
      */
-    protected int getIndex(String uuidFound) {
+    protected Integer getKey(String uuidFound) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuidFound)) {
                 return i;
