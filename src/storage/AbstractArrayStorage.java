@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected void saveResume(Object index, Resume resume) {
         if (size != storage.length){
-            putInStorage((Integer) index, resume);
+            putInStorage((int) index, resume);
             size++;
         } else {
             throw new StorageException("OverFlow", resume.getUuid());
@@ -22,14 +22,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(Object index) {
-        deleteFromStorage((Integer)index);
+        deleteFromStorage((int)index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
     protected void updateResume(Object index, Resume resume) {
-        storage[(Integer) index] = resume;
+        storage[(int)index] = resume;
     }
 
     @Override
@@ -57,14 +57,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-
-
     @Override
     protected boolean isExist(Object key) {
-        return (Integer)key >= 0;
+        return (int)key >= 0;
     }
-
-
 
     protected abstract Integer getKey(String uuid);
     protected abstract void putInStorage(int index, Resume resume);
