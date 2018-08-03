@@ -56,11 +56,14 @@ public class MapStorage extends AbstractStorage {
      *        -1 if not found
      */
     protected String getKey(String uuid) {
-        for (Map.Entry<String, Resume> resumeEntry : storage.entrySet()) {
-            if (resumeEntry.getKey().equals(uuid)){
-                return uuid;
-            }
+        if (storage.containsKey(uuid)){
+            return uuid;
         }
-        return "";
+        return null;
+    }
+
+    @Override
+    protected boolean isExist(Object key) {
+        return storage.containsKey(key);
     }
 }
