@@ -4,6 +4,8 @@ import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
 import model.Resume;
 
+import java.util.Comparator;
+
 public abstract class AbstractStorage implements Storage {
 
     @Override
@@ -45,6 +47,20 @@ public abstract class AbstractStorage implements Storage {
             return key;
         }
         throw new ExistUuidException(uuid);
+    }
+
+    protected static class ResumeFullNameComarator implements Comparator<Resume> {
+
+        @Override
+        public int compare(Resume o1, Resume o2) {
+            int value = o1.getFullName().compareTo(o2.getFullName());
+            if (value > 0) {
+                return 1;
+            } else if (value == 0){
+                return o1.getUuid().compareTo(o2.getUuid());
+            }
+            return -1;
+        }
     }
 
     protected abstract boolean isExist(Object key);

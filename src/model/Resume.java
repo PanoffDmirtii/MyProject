@@ -1,18 +1,28 @@
 package model;
 
-import java.util.UUID;
+import java.util.Comparator;
 
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
-
-    public Resume() {
-        this(UUID.randomUUID().toString());
-    }
+    private String fullName;
 
     public Resume(String uuid) {
         this.uuid = uuid;
+
+    }
+    public Resume(String uuid, String fullName) {
+        this.uuid = uuid;
+        this.fullName = fullName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUuid() {
@@ -46,5 +56,19 @@ public class Resume implements Comparable<Resume> {
     @Override
     public int compareTo(Resume o) {
         return this.uuid.compareTo(o.uuid);
+    }
+
+    public static class ResumeFullNameComarator implements Comparator<Resume> {
+
+        @Override
+        public int compare(Resume o1, Resume o2) {
+            int value = o1.getFullName().compareTo(o2.getFullName());
+            if (value > 0) {
+                return 1;
+            } else if (value == 0) {
+                return o1.getUuid().compareTo(o2.getUuid());
+            }
+            return -1;
+        }
     }
 }

@@ -4,6 +4,7 @@ import exceptions.StorageException;
 import model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
@@ -41,8 +42,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = Arrays.asList(storage).subList(0, size);
+        resumes.sort(new Resume.ResumeFullNameComarator());
+        System.out.println("Return sorted list resumes: " + resumes);
+        return resumes;
     }
 
     @Override

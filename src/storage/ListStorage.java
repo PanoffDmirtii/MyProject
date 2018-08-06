@@ -5,7 +5,7 @@ import model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage{
+public class ListStorage extends AbstractStorage {
     private List<Resume> storage = new ArrayList<>();
 
     @Override
@@ -15,7 +15,7 @@ public class ListStorage extends AbstractStorage{
 
     @Override
     protected void deleteResume(Object index) {
-        storage.remove((int)index);
+        storage.remove((int) index);
     }
 
     @Override
@@ -29,8 +29,11 @@ public class ListStorage extends AbstractStorage{
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = new ArrayList<>(storage).subList(0, storage.size());
+        resumes.sort(new ResumeFullNameComarator());
+        System.out.println("Return sorted list resumes: " + resumes);
+        return resumes;
     }
 
     @Override
@@ -46,8 +49,8 @@ public class ListStorage extends AbstractStorage{
 
     @Override
     protected Integer getKey(String uuid) {
-        for (Resume resume : storage){
-            if (resume.getUuid().equals(uuid)){
+        for (Resume resume : storage) {
+            if (resume.getUuid().equals(uuid)) {
                 return storage.indexOf(resume);
             }
         }
