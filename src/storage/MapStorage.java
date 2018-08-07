@@ -31,11 +31,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = new ArrayList<>(storage.values()).subList(0, storage.size());
-        resumes.sort(new ResumeFullNameComarator());
-        System.out.println("Return sorted list resumes: " + resumes);
-        return resumes;
+    protected List<Resume> getAll() {
+        return new ArrayList<>(storage.values()).subList(0, storage.size());
     }
 
     @Override

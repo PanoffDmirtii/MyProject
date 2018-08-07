@@ -29,11 +29,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = new ArrayList<>(storage).subList(0, storage.size());
-        resumes.sort(new ResumeFullNameComarator());
-        System.out.println("Return sorted list resumes: " + resumes);
-        return resumes;
+    protected List<Resume> getAll() {
+        return new ArrayList<>(storage).subList(0,storage.size());
     }
 
     @Override

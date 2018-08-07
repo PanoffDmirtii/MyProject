@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Comparator;
+import java.util.Objects;
+import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
 
@@ -8,8 +10,9 @@ public class Resume implements Comparable<Resume> {
     private String uuid;
     private String fullName;
 
-    public Resume(String uuid) {
-        this.uuid = uuid;
+    public Resume(String fullName) {
+        this.fullName = fullName;
+        this.uuid = UUID.randomUUID().toString();
 
     }
     public Resume(String uuid, String fullName) {
@@ -42,33 +45,27 @@ public class Resume implements Comparable<Resume> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Resume resume = (Resume) o;
-
-        return uuid.equals(resume.uuid);
+        return Objects.equals(uuid, resume.uuid) &&
+                Objects.equals(fullName, resume.fullName);
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return Objects.hash(uuid, fullName);
     }
 
     @Override
     public int compareTo(Resume o) {
-        return this.uuid.compareTo(o.uuid);
+        int value = this.getFullName().compareTo(o.getFullName());
+        return (value == 0) ? this.getUuid().compareTo(o.getUuid()) : value;
     }
 
-    public static class ResumeFullNameComarator implements Comparator<Resume> {
+    public static class ResumeComarator implements Comparator<Resume> {
 
         @Override
         public int compare(Resume o1, Resume o2) {
-            int value = o1.getFullName().compareTo(o2.getFullName());
-            if (value > 0) {
-                return 1;
-            } else if (value == 0) {
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
-            return -1;
+            return o1.getUuid().compareTo(o2.getUuid());
         }
     }
 }

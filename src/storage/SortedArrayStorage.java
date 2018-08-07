@@ -13,8 +13,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Integer getKey(String uuid) {
-        Resume key = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, key);
+        Resume key = new Resume(uuid, "NoName");
+        return Arrays.binarySearch(storage, 0, size, key, new Resume.ResumeComarator());
     }
 
     @Override

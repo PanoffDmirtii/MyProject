@@ -11,6 +11,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    protected abstract Integer getKey(String uuid);
+    protected abstract void putInStorage(int index, Resume resume);
+    protected abstract void deleteFromStorage(int index);
+
     @Override
     protected void saveResume(Object index, Resume resume) {
         if (size != storage.length){
@@ -38,16 +42,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(Integer) index];
     }
 
+    @Override
+    protected List<Resume> getAll() {
+        return Arrays.asList(storage).subList(0, size);
+    }
+
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = Arrays.asList(storage).subList(0, size);
-        resumes.sort(new Resume.ResumeFullNameComarator());
-        System.out.println("Return sorted list resumes: " + resumes);
-        return resumes;
-    }
+
 
     @Override
     public void clear() {
@@ -65,8 +68,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected boolean isExist(Object key) {
         return (int)key >= 0;
     }
-
-    protected abstract Integer getKey(String uuid);
-    protected abstract void putInStorage(int index, Resume resume);
-    protected abstract void deleteFromStorage(int index);
 }

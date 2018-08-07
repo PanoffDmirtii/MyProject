@@ -19,7 +19,7 @@ public abstract class  AbstractArrayStorageTest extends AbstractStorageTest {
         } catch (Exception e) {
             Assert.fail("OVERFLOW");
         }
-        storage.save(TEST_EXCEPTION);
+        storage.save(RESUME_4);
     }
 
 }

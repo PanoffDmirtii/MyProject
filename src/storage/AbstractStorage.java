@@ -4,9 +4,17 @@ import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
 import model.Resume;
 
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
+    protected abstract List<Resume> getAll();
+    protected abstract boolean isExist(Object key);
+    protected abstract void saveResume(Object key, Resume resume);
+    protected abstract void updateResume(Object key, Resume resume);
+    protected abstract Object getKey(String uuid);
+    protected abstract void deleteResume(Object key);
+    protected abstract Resume getResume(Object key);
 
     @Override
     public void save(Resume resume) {
@@ -29,8 +37,15 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        System.out.println("Resume " + uuid);
         return getResume(getKeyIfExist(uuid));
+    }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = getAll();
+        Collections.sort(resumes);
+        System.out.println("Return sorted list resumes: " + resumes);
+        return resumes;
     }
 
     protected Object getKeyIfExist(String uuid) {
@@ -48,25 +63,4 @@ public abstract class AbstractStorage implements Storage {
         }
         throw new ExistUuidException(uuid);
     }
-
-    protected static class ResumeFullNameComarator implements Comparator<Resume> {
-
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            int value = o1.getFullName().compareTo(o2.getFullName());
-            if (value > 0) {
-                return 1;
-            } else if (value == 0){
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
-            return -1;
-        }
-    }
-
-    protected abstract boolean isExist(Object key);
-    protected abstract void saveResume(Object key, Resume resume);
-    protected abstract void updateResume(Object key, Resume resume);
-    protected abstract Object getKey(String uuid);
-    protected abstract void deleteResume(Object key);
-    protected abstract Resume getResume(Object key);
 }
