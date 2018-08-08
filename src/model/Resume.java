@@ -61,11 +61,5 @@ public class Resume implements Comparable<Resume> {
         return (value == 0) ? this.getUuid().compareTo(o.getUuid()) : value;
     }
 
-    public static class ResumeComarator implements Comparator<Resume> {
 
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getUuid().compareTo(o2.getUuid());
-        }
-    }
 }
