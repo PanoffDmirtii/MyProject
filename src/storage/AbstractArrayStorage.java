@@ -11,7 +11,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected abstract Integer getKey(String uuid);
     protected abstract void putInStorage(int index, Resume resume);
     protected abstract void deleteFromStorage(int index);
 
@@ -50,8 +49,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-
-
     @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);

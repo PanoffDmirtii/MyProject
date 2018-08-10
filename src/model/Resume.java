@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -57,8 +56,8 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        int value = this.getFullName().compareTo(o.getFullName());
-        return (value == 0) ? this.getUuid().compareTo(o.getUuid()) : value;
+        int value = fullName.compareTo(o.fullName);
+        return (value == 0) ? uuid.compareTo(o.uuid) : value;
     }
 
 

@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +26,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_1 = new Resume(UUID_1, "DmitriiPanov");
     private static final Resume RESUME_2 = new Resume(UUID_2, "NikolayAprelev");
     private static final Resume RESUME_3 = new Resume(UUID_3, "DmitriiPanov");
+    private static final Resume RESUME_3_UPDATE = RESUME_3;
     protected static final Resume RESUME_4 = new Resume(UUID_4,"EvgeniiPupkin");
 
     @Before
@@ -67,8 +67,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateExistResume() {
-        storage.update(RESUME_3);
-        Assert.assertEquals(RESUME_3, storage.get(UUID_3));
+        RESUME_3_UPDATE.setFullName("NovikovaEkaterina");
+        storage.update(RESUME_3_UPDATE);
+        Assert.assertEquals(RESUME_3_UPDATE, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistUuidException.class)
@@ -88,7 +89,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        List<Resume> sortedResume = new ArrayList<Resume>(Arrays.asList(RESUME_1,RESUME_2,RESUME_3));
+        List<Resume> sortedResume = Arrays.asList(RESUME_1,RESUME_2,RESUME_3);
         Collections.sort(sortedResume);
         Assert.assertEquals(sortedResume, storage.getAllSorted());
     }

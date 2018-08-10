@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage {
-    private Map<Integer, Resume> storage = new HashMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void saveResume(Object uuid, Resume resume) {
-        storage.put((Integer) uuid, resume);
+        storage.put((String) uuid, resume);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void updateResume(Object uuid, Resume resume) {
-        storage.put((Integer) uuid, resume);
+        storage.put((String) uuid, resume);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class MapUuidStorage extends AbstractStorage {
      * @return i if storage contain resume
      *        -1 if not found
      */
-    protected Integer getKey(String uuid) {
-        return uuid.hashCode();
+    protected String getKey(String uuid) {
+        return uuid;
     }
 
     @Override
