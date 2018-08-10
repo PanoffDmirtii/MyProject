@@ -23,11 +23,11 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
     private static final String UUID_4 = "uuid_4";
-    private static final Resume RESUME_1 = new Resume(UUID_1, "DmitriiPanov");
-    private static final Resume RESUME_2 = new Resume(UUID_2, "NikolayAprelev");
-    private static final Resume RESUME_3 = new Resume(UUID_3, "DmitriiPanov");
-    private static final Resume RESUME_3_UPDATE = RESUME_3;
-    protected static final Resume RESUME_4 = new Resume(UUID_4,"EvgeniiPupkin");
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Dmitrii Panov");
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Nikolay Aprelev");
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Dmitrii Panov");
+    private static final Resume RESUME_3_UPDATE = new Resume(UUID_3, "Puzanova Irina");
+    protected static final Resume RESUME_4 = new Resume(UUID_4,"Evgenii Pupkin");
 
     @Before
     public void setUp() {
@@ -67,7 +67,6 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateExistResume() {
-        RESUME_3_UPDATE.setFullName("NovikovaEkaterina");
         storage.update(RESUME_3_UPDATE);
         Assert.assertEquals(RESUME_3_UPDATE, storage.get(UUID_3));
     }
