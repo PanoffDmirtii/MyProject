@@ -1,6 +1,7 @@
 package model;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,10 +10,9 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private String uuid;
     private String fullName;
-    private ListOfContent listOfContentSection;
-    private TextSection textSection;
-    EnumMap<SectionType, ListOfContent> mapSection1 = new EnumMap<>(SectionType.class);
-    EnumMap<SectionType, TextSection> mapSection2 = new EnumMap<>(SectionType.class);
+    private Contacts contacts;
+    private EnumMap<SectionType, Content> mapSection = new EnumMap<>(SectionType.class);
+
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -25,6 +25,21 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
+    public void addSection(SectionType type, Content content){
+        mapSection.put(type, content);
+    }
+
+    public void printResume(){
+        System.out.println(fullName);
+        System.out.println(contacts);
+        for (Map.Entry<SectionType, Content> section : mapSection.entrySet()) {
+            System.out.println("Section: " + section.getKey().getTitle() + "\n" + section.getValue());
+        }
+    }
+
+    public void setContacts(Contacts contacts) {
+        this.contacts = contacts;
+    }
 
     public String getFullName() {
         return fullName;
