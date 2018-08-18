@@ -7,19 +7,14 @@ import java.util.List;
  * Class for sections ACHIEVEMENT("Достижения"), QUALIFICATIONS("Квалификация"),
  */
 public class TextList extends Content {
-    private List<String> listOfcontent = new ArrayList<>();
+    private List<String> listOfContent = new ArrayList<>();
 
     public void addToList(String content){
-        listOfcontent.add(content);
-    }
-
-    public List<String> getListOfcontent() {
-        return listOfcontent;
+        listOfContent.add(content);
     }
 
     @Override
     public String toString() {
-
-        return listOfcontent.toString() + "\n";
+        return listOfContent.toString() + "\n";
     }
 }

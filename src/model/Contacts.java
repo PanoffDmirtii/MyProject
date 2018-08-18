@@ -27,6 +27,6 @@ public class Contacts {
         return "Contacts: " + "\n" + "Address: " + address + "\n"
                 + "Email: " + email + "\n"
                 + "Telephone: " + telephone + "\n"
-                + "Skype: " + skype;
+                + "Skype: " + skype + "\n";
     }
 }

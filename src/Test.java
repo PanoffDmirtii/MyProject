@@ -23,8 +23,8 @@ public class Test {
         resume.addSection(SectionType.PERSONAL, content2);
 
         Content content3 = new TextList();
-        ((TextList) content3).getListOfcontent().add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity," +
-                " Google Authenticator, Jira, Zendesk.");
+        ((TextList) content3).addToList(("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity," +
+                " Google Authenticator, Jira, Zendesk."));
         ((TextList) content3).addToList("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT)," +
                 " Commet, HTML5, Highstock для алгоритмического трейдинга.");
         ((TextList) content3).addToList("Реализация протоколов по приему платежей всех основных платежных системы России" +
@@ -48,7 +48,7 @@ public class Test {
                 "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         wrike.setInstitution("Wrike");
         wrike.setPosition("Старший разработчик (backend)");
-        ((InstitutionsList) content5).getInstitutionsList().add(wrike);
+        ((InstitutionsList) content5).addToList(wrike);
 
         resume.addSection(SectionType.EXPERIENCE, content5);
 
@@ -58,10 +58,10 @@ public class Test {
         siemens_ag.setDescription("3 месяца обучения мобильным IN сетям (Берлин)");
         siemens_ag.setStartDate(LocalDate.of(2005, 1, 15));
         siemens_ag.setEndDate(LocalDate.of(2005, 4, 17));
-        ((InstitutionsList) content6).getInstitutionsList().add(siemens_ag);
+        ((InstitutionsList) content6).addToList(siemens_ag);
 
         resume.addSection(SectionType.EDUCATION, content6);
 
-        resume.printResume();
+        PrintResume.printResumeToConsole(resume);
     }
 }

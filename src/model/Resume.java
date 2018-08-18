@@ -1,18 +1,16 @@
 package model;
 
 import java.util.EnumMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
-    private String uuid;
+    private final String uuid;
     private String fullName;
     private Contacts contacts;
     private EnumMap<SectionType, Content> mapSection = new EnumMap<>(SectionType.class);
-
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -25,20 +23,20 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
-    public void addSection(SectionType type, Content content){
+    public void addSection(SectionType type, Content content) {
         mapSection.put(type, content);
     }
 
-    public void printResume(){
-        System.out.println(fullName);
-        System.out.println(contacts);
-        for (Map.Entry<SectionType, Content> section : mapSection.entrySet()) {
-            System.out.println("Section: " + section.getKey().getTitle() + "\n" + section.getValue());
-        }
+    public EnumMap<SectionType, Content> getMapSection() {
+        return mapSection;
     }
 
     public void setContacts(Contacts contacts) {
         this.contacts = contacts;
+    }
+
+    public Contacts getContacts() {
+        return contacts;
     }
 
     public String getFullName() {
@@ -51,10 +49,6 @@ public class Resume implements Comparable<Resume> {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override
@@ -81,6 +75,4 @@ public class Resume implements Comparable<Resume> {
         int value = fullName.compareTo(o.fullName);
         return (value == 0) ? uuid.compareTo(o.uuid) : value;
     }
-
-
 }

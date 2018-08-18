@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Institution {
     private String institution;
+    private String webSite;
     private String position;
     private String description;
     private LocalDate startDate;
@@ -11,6 +12,10 @@ public class Institution {
 
     public void setInstitution(String institution) {
         this.institution = institution;
+    }
+
+    public void setWebSite(String webSite){
+        this.webSite = webSite;
     }
 
     public void setPosition(String position) {
@@ -32,6 +37,7 @@ public class Institution {
     @Override
     public String toString() {
         return "Institution: " + institution + "\n"
+                + "WebSite: " + webSite + "\n"
                 + "Data: " + startDate + " - "  + endDate + "\n"
                 + "Position: " + position + "\n"
                 + "Description: " + description;

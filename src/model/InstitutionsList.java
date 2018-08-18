@@ -11,13 +11,8 @@ import java.util.List;
 public class InstitutionsList extends Content {
     private List<Institution> institutionsList = new ArrayList<>();
 
-
-    public List<Institution> getInstitutionsList() {
-        return institutionsList;
-    }
-
-    public void setInstitutionsList(List<Institution> institutionsList) {
-        this.institutionsList = institutionsList;
+    public void addToList(Institution institution){
+        institutionsList.add(institution);
     }
 
     @Override
