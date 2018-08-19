@@ -11,11 +11,13 @@ public class Institution {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Institution(String institution, String description) {
+    public Institution(String institution, String description, LocalDate startDate, LocalDate endDate) {
         Objects.requireNonNull(institution, "Text must be not empty");
         Objects.requireNonNull(description, "Text must be not empty");
         this.institution = institution;
         this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public void setWebSite(String webSite){
@@ -24,14 +26,6 @@ public class Institution {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     @Override

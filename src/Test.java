@@ -46,20 +46,19 @@ public class Test {
         resume.addSection(SectionType.QUALIFICATIONS, qualifications);
 
         Institution wrike = new Institution("Wrike", "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        InstitutionsList experience = new InstitutionsList(wrike);
-
-        wrike.setStartDate(LocalDate.of(2014, 10, 1));
-        wrike.setEndDate(LocalDate.of(2016, 1, 6));
+                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",
+                LocalDate.of(2014, 10, 1),
+                LocalDate.of(2016, 1, 6));
         wrike.setPosition("Старший разработчик (backend)");
+        InstitutionsList experience = new InstitutionsList(wrike);
         experience.addToList(wrike);
 
         resume.addSection(SectionType.EXPERIENCE, experience);
 
-        Institution siemens_ag = new Institution("Siemens AG", "3 месяца обучения мобильным IN сетям (Берлин)");
+        Institution siemens_ag = new Institution("Siemens AG", "3 месяца обучения мобильным IN сетям (Берлин)",
+                LocalDate.of(2005, 1, 15),
+                LocalDate.of(2005, 4, 17));
         InstitutionsList education = new InstitutionsList(siemens_ag);
-        siemens_ag.setStartDate(LocalDate.of(2005, 1, 15));
-        siemens_ag.setEndDate(LocalDate.of(2005, 4, 17));
         education.addToList(siemens_ag);
 
         resume.addSection(SectionType.EDUCATION, education);
