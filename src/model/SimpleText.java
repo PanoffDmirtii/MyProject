@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Class for sections PERSONAL("Личные качества"),
  * OBJECTIVE("Позиция").
@@ -7,7 +9,8 @@ package model;
 public class SimpleText extends Content {
     private String text;
 
-    public void setText(String text) {
+    public SimpleText(String text) {
+        Objects.requireNonNull(text, "Text must be not empty");
         this.text = text;
     }
 

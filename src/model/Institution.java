@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Institution {
     private String institution;
@@ -10,8 +11,11 @@ public class Institution {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public void setInstitution(String institution) {
+    public Institution(String institution, String description) {
+        Objects.requireNonNull(institution, "Text must be not empty");
+        Objects.requireNonNull(description, "Text must be not empty");
         this.institution = institution;
+        this.description = description;
     }
 
     public void setWebSite(String webSite){
@@ -20,10 +24,6 @@ public class Institution {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public void setStartDate(LocalDate startDate) {

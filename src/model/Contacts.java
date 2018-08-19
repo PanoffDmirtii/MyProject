@@ -1,32 +1,18 @@
 package model;
 
-public class Contacts {
-    private String address;
-    private String email;
-    private String telephone;
-    private String skype;
+public enum Contacts {
+    ADDRESS("Адресс"),
+    EMAIL("E-mail"),
+    TELEPHONE("Телефон"),
+    SKYPE("Skype");
 
-    public void setAddress(String address) {
-        this.address = address;
+    private String title;
+
+    Contacts(String title) {
+        this.title = title;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public void setSkype(String skype) {
-        this.skype = skype;
-    }
-
-    @Override
-    public String toString() {
-        return "Contacts: " + "\n" + "Address: " + address + "\n"
-                + "Email: " + email + "\n"
-                + "Telephone: " + telephone + "\n"
-                + "Skype: " + skype + "\n";
+    public String getTitle() {
+        return title;
     }
 }

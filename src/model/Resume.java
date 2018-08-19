@@ -9,8 +9,8 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private String fullName;
-    private Contacts contacts;
     private EnumMap<SectionType, Content> mapSection = new EnumMap<>(SectionType.class);
+    private EnumMap<Contacts, String> mapContact = new EnumMap<>(Contacts.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -27,24 +27,20 @@ public class Resume implements Comparable<Resume> {
         mapSection.put(type, content);
     }
 
+    public void addContact(Contacts type, String text) {
+        mapContact.put(type, text);
+    }
+
     public EnumMap<SectionType, Content> getMapSection() {
         return mapSection;
     }
 
-    public void setContacts(Contacts contacts) {
-        this.contacts = contacts;
-    }
-
-    public Contacts getContacts() {
-        return contacts;
+    public EnumMap<Contacts, String> getMapContact() {
+        return mapContact;
     }
 
     public String getFullName() {
         return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getUuid() {
@@ -53,7 +49,8 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return uuid;
+        return "UUID: " + uuid + "\n"
+                + "Full name: " + fullName;
     }
 
     @Override

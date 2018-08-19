@@ -11,6 +11,10 @@ import java.util.List;
 public class InstitutionsList extends Content {
     private List<Institution> institutionsList = new ArrayList<>();
 
+    public InstitutionsList(Institution institution) {
+        institutionsList.add(institution);
+    }
+
     public void addToList(Institution institution){
         institutionsList.add(institution);
     }
