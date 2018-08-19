@@ -1,8 +1,16 @@
 import model.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public class Test {
+    private static void printResumeToConsole(Resume resume){
+        System.out.println(resume.getFullName());
+        System.out.println(resume.getContacts());
+        for (Map.Entry<SectionType, Content> section : resume.getMapSection().entrySet()) {
+            System.out.println("Section: " + section.getKey().getTitle() + "\n" + section.getValue());
+        }
+    }
     public static void main(String[] args) {
         Resume resume = new Resume("Дмитрий Панов");
 
@@ -14,33 +22,33 @@ public class Test {
 
         resume.setContacts(contacts);
 
-        Content content1 = new SimpleText();
-        ((SimpleText) content1).setText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
-        resume.addSection(SectionType.OBJECTIVE, content1);
+        SimpleText objective = new SimpleText();
+        objective.setText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        resume.addSection(SectionType.OBJECTIVE, objective);
 
-        Content content2 = new SimpleText();
-        ((SimpleText) content2).setText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        resume.addSection(SectionType.PERSONAL, content2);
+        SimpleText personal = new SimpleText();
+        personal.setText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        resume.addSection(SectionType.PERSONAL, personal);
 
-        Content content3 = new TextList();
-        ((TextList) content3).addToList(("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity," +
+        TextList achievement = new TextList();
+        achievement.addToList(("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity," +
                 " Google Authenticator, Jira, Zendesk."));
-        ((TextList) content3).addToList("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT)," +
+        achievement.addToList("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT)," +
                 " Commet, HTML5, Highstock для алгоритмического трейдинга.");
-        ((TextList) content3).addToList("Реализация протоколов по приему платежей всех основных платежных системы России" +
+        achievement.addToList("Реализация протоколов по приему платежей всех основных платежных системы России" +
                 " (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
 
-        resume.addSection(SectionType.ACHIEVEMENT, content3);
+        resume.addSection(SectionType.ACHIEVEMENT, achievement);
 
-        Content content4 = new TextList();
-        ((TextList) content4).addToList("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
-        ((TextList) content4).addToList("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
-        ((TextList) content4).addToList("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle,");
-        ((TextList) content4).addToList("MySQL, SQLite, MS SQL, HSQLDB");
+        TextList qualifications = new TextList();
+        qualifications.addToList("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
+        qualifications.addToList("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
+        qualifications.addToList("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle,");
+        qualifications.addToList("MySQL, SQLite, MS SQL, HSQLDB");
 
-        resume.addSection(SectionType.QUALIFICATIONS, content4);
+        resume.addSection(SectionType.QUALIFICATIONS, qualifications);
 
-        Content content5 = new InstitutionsList();
+        InstitutionsList experience = new InstitutionsList();
         Institution wrike = new Institution();
         wrike.setStartDate(LocalDate.of(2014, 10, 1));
         wrike.setEndDate(LocalDate.of(2016, 1, 6));
@@ -48,20 +56,20 @@ public class Test {
                 "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         wrike.setInstitution("Wrike");
         wrike.setPosition("Старший разработчик (backend)");
-        ((InstitutionsList) content5).addToList(wrike);
+        experience.addToList(wrike);
 
-        resume.addSection(SectionType.EXPERIENCE, content5);
+        resume.addSection(SectionType.EXPERIENCE, experience);
 
-        Content content6 = new InstitutionsList();
+        InstitutionsList education = new InstitutionsList();
         Institution siemens_ag = new Institution();
         siemens_ag.setInstitution("Siemens AG");
         siemens_ag.setDescription("3 месяца обучения мобильным IN сетям (Берлин)");
         siemens_ag.setStartDate(LocalDate.of(2005, 1, 15));
         siemens_ag.setEndDate(LocalDate.of(2005, 4, 17));
-        ((InstitutionsList) content6).addToList(siemens_ag);
+        education.addToList(siemens_ag);
 
-        resume.addSection(SectionType.EDUCATION, content6);
+        resume.addSection(SectionType.EDUCATION, education);
 
-        PrintResume.printResumeToConsole(resume);
+        printResumeToConsole(resume);
     }
 }
