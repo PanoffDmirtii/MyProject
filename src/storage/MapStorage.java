@@ -8,26 +8,26 @@ import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage<Resume> {
-    private Map<Resume, Resume> storage = new HashMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void saveResume(Resume keyResume, Resume resume) {
-        storage.put(resume, resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void deleteResume(Resume keyResume) {
-        storage.remove(keyResume);
+        storage.remove(keyResume.getUuid());
     }
 
     @Override
     protected void updateResume(Resume keyResume, Resume resume) {
-        storage.put(resume, resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected Resume getResume(Resume keyResume) {
-        return storage.get(keyResume);
+        return storage.get(keyResume.getUuid());
     }
 
     @Override
@@ -46,18 +46,9 @@ public class MapStorage extends AbstractStorage<Resume> {
         return storage.size();
     }
 
-    /**
-     * Check resume in storage
-     * @return i if storage contain resume
-     *        -1 if not found
-     */
+
     protected Resume getKey(String uuid) {
-        for (Resume resume : storage.keySet()) {
-            if (resume.getUuid().equals(uuid)){
-                return resume;
-            }
-        }
-        return null;
+        return storage.get(uuid);
     }
 
     @Override

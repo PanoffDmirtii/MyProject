@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,19 +9,20 @@ import java.util.Objects;
  */
 
 public class InstitutionsList extends Content {
-    private List<Institution> institutionsList = new ArrayList<>();
+    private List<Institution> institutionsList;
 
-    public InstitutionsList(Institution institution) {
-        Objects.requireNonNull(institution, "not null");
-        institutionsList.add(institution);
+    public InstitutionsList(List<Institution> institutionsList) {
+        this.institutionsList = institutionsList;
     }
 
-    public void addToList(Institution institution){
-        for (Institution elements : institutionsList){
-            if (elements.getInstitution().equals(institution.getInstitution())){
-                elements.addInformation(institution.getInfoList().get(0));
-            } else {
-                institutionsList.add(institution);
+    public List<Institution> getInstitutionsList() {
+        return institutionsList;
+    }
+
+    public void addInstitution(Institution institution){
+        for (Institution element : institutionsList) {
+            if (element.equals(institution)){
+                element.getInfoList().addAll(institution.getInfoList());
             }
         }
     }

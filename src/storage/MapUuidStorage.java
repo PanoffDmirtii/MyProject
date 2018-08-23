@@ -46,11 +46,6 @@ public class MapUuidStorage extends AbstractStorage<String> {
         return storage.size();
     }
 
-    /**
-     * Check resume in storage
-     * @return i if storage contain resume
-     *        -1 if not found
-     */
     protected String getKey(String uuid) {
         return uuid;
     }

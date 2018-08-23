@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -60,21 +61,23 @@ public abstract class AbstractStorageTest {
         qualifications1.addToList("MySQL, SQLite, MS SQL, HSQLDB");
         RESUME_1.addSection(SectionType.QUALIFICATIONS, qualifications1);
 
-        Information infoWrike = new Information("Wrike", "https://www.wrike.com/", "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",
-                LocalDate.of(2014, 10, 1),
-                LocalDate.of(2016, 1, 6));
-        Institution wrike1 = new Institution("Wrike", infoWrike);
-        InstitutionsList experience1 = new InstitutionsList(wrike1);
-        experience1.addToList(wrike1);
+        Information infoWrike = new Information("Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",LocalDate.of(2014, 10, 1),
+                LocalDate.of(2016, 1, 6), "Старший разработчик (backend)");
+        Institution wrike1 = new Institution("Wrike","", "", infoWrike);
+        List<Institution> list1 = new ArrayList<>();
+        list1.add(wrike1);
+        InstitutionsList experience1 = new InstitutionsList(list1);
         RESUME_1.addSection(SectionType.EXPERIENCE, experience1);
 
-        Information infoSiements = new Information("Siemens AG", "", "3 месяца обучения мобильным IN сетям (Берлин)",
+
+        Information infoSiements = new Information("3 месяца обучения мобильным IN сетям (Берлин)",
                 LocalDate.of(2005, 1, 15),
                 LocalDate.of(2005, 4, 17));
-        Institution siemens_ag1 = new Institution("Siemens AG", infoSiements);
-        InstitutionsList education1 = new InstitutionsList(siemens_ag1);
-        education1.addToList(siemens_ag1);
+        Institution siemens_ag1 = new Institution("Siemens AG","", "",  infoSiements);
+        List<Institution> list2 = new ArrayList<>();
+        list2.add(siemens_ag1);
+        InstitutionsList education1 = new InstitutionsList(list2);
         RESUME_1.addSection(SectionType.EDUCATION, education1);
 
 
@@ -107,31 +110,34 @@ public abstract class AbstractStorageTest {
         qualifications3.addToList("проектрирования, архитектурных шаблонов, UML, функционального");
         RESUME_3.addSection(SectionType.QUALIFICATIONS, qualifications3);
 
-        Information infoYota = new Information("Yota", "https://www.yota.ru/", "Ведущий специалист", "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\"" +
-                " (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2)." +
-                " Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)",
-                LocalDate.of(2008, 6, 1),
-                LocalDate.of(2010, 12, 1));
-        Institution yota = new Institution("Yota", infoYota);
-        Information infoEnkata = new Information("Enkata","http://enkata.com/", "Разработчик ПО","Реализация клиентской (Eclipse RCP)" +
+
+        Information infoYota = new Information("Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\"" +
+                " (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2).", LocalDate.of(2008, 6, 1),
+                LocalDate.of(2010, 12, 1), "Ведущий специалист");
+        Institution yota = new Institution("Yota","", "", infoYota);
+
+
+        Information infoEnkata = new Information("Реализация клиентской (Eclipse RCP)" +
                 " и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS)" +
                 " частей кластерного J2EE приложения (OLAP, Data mining).",
                 LocalDate.of(2007, 3, 1),
-                LocalDate.of(208, 6, 1)  );
-        Institution enkata = new Institution("Enkata", infoEnkata);
+                LocalDate.of(208, 6, 1),"Разработчик ПО");
+        Institution enkata = new Institution("Enkata","Enkata","http://enkata.com/", infoEnkata);
 
-        InstitutionsList experience3 = new InstitutionsList(yota);
-        experience3.addToList(yota);
-        experience3.addToList(enkata);
+        List<Institution> list3 = new ArrayList<>();
+        list3.add(yota);
+        list3.add(enkata);
+        InstitutionsList experience3 = new InstitutionsList(list3);
         RESUME_3.addSection(SectionType.EXPERIENCE, experience3);
 
 
         Information infoAlcatel = new Information("6 месяцев обучения цифровым телефонным сетям (Москва)",
                 LocalDate.of(2005, 1, 15),
                 LocalDate.of(2005, 4, 17));
-        Institution alcatel = new Institution("Alcatel", infoAlcatel);
-        InstitutionsList education3 = new InstitutionsList(alcatel);
-        education3.addToList(alcatel);
+        Institution alcatel = new Institution("Alcatel","","", infoAlcatel);
+        List<Institution> list4 = new ArrayList<>();
+        list4.add(alcatel);
+        InstitutionsList education3 = new InstitutionsList(list4);
         RESUME_3.addSection(SectionType.EDUCATION, education3);
 /**
  *
@@ -144,14 +150,16 @@ public abstract class AbstractStorageTest {
         Information infoUniversity1 = new Information("Аспирантура (программист С, С++)",
                 LocalDate.of(1993, 1, 15),
                 LocalDate.of(1996, 4, 17));
-        Institution spbTI1 = new Institution("SPBTI", infoUniversity1);
+        Institution spbTI1 = new Institution("SPBTI","","", infoUniversity1);
 
         Information infoUniversity2 = new Information("Инженер (программист Fortran, C)",
                 LocalDate.of(1987, 3, 15),
                 LocalDate.of(1993, 7, 17));
-        Institution spbTI2 = new Institution("SPBTI", infoUniversity2);
-        InstitutionsList education4 = new InstitutionsList(spbTI1);
-        education4.addToList(spbTI2);
+        Institution spbTI2 = new Institution("SPBTI","","", infoUniversity2);
+        List<Institution> list5 = new ArrayList<>();
+        list5.add(spbTI1);
+        InstitutionsList education4 = new InstitutionsList(list5);
+        education4.addInstitution(spbTI2);
         RESUME_3.addSection(SectionType.EDUCATION, education3);
 
 
