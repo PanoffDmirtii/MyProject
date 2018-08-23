@@ -6,7 +6,7 @@ import model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -15,9 +15,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void deleteFromStorage(int index);
 
     @Override
-    protected void saveResume(Object index, Resume resume) {
+    protected void saveResume(Integer index, Resume resume) {
         if (size != storage.length){
-            putInStorage((int) index, resume);
+            putInStorage(index, resume);
             size++;
         } else {
             throw new StorageException("OverFlow", resume.getUuid());
@@ -25,30 +25,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        deleteFromStorage((int)index);
+    protected void deleteResume(Integer index) {
+        deleteFromStorage(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void updateResume(Object index, Resume resume) {
-        storage[(int)index] = resume;
+    protected void updateResume(Integer index, Resume resume) {
+        storage[index] = resume;
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage[(Integer) index];
-    }
-
-    @Override
-    protected List<Resume> getAll() {
-        return Arrays.asList(storage).subList(0, size);
+    protected Resume getResume(Integer index) {
+        return storage[index];
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
+    @Override
+    protected List<Resume> getAll() {
+        return Arrays.asList(storage).subList(0, size);
+    }
+
     @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -62,7 +62,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return (int)key >= 0;
+    protected boolean isExist(Integer key) {
+        return key >= 0;
     }
 }

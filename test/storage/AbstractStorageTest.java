@@ -3,11 +3,12 @@ package storage;
 
 import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
-import model.Resume;
+import model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,9 +30,132 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3_UPDATE = new Resume(UUID_3, "Puzanova Irina");
     protected static final Resume RESUME_4 = new Resume(UUID_4,"Evgenii Pupkin");
 
+
+
     @Before
     public void setUp() {
         storage.clear();
+        RESUME_1.addContact(Contacts.ADDRESS, "СПб, Невский проспект, дом 10, кв 7");
+        RESUME_1.addContact(Contacts.EMAIL, "qwerty@gmail.com");
+        RESUME_1.addContact(Contacts.TELEPHONE, "+79213079075");
+        RESUME_1.addContact(Contacts.SKYPE, "Panov_qwerty");
+
+        SimpleText objective1 = new SimpleText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        RESUME_1.addSection(SectionType.OBJECTIVE, objective1);
+
+        SimpleText personal1 = new SimpleText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        RESUME_1.addSection(SectionType.PERSONAL, personal1);
+
+        TextList achievement1 = new TextList("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity," +
+                " Google Authenticator, Jira, Zendesk.");
+        achievement1.addToList("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT)," +
+                " Commet, HTML5, Highstock для алгоритмического трейдинга.");
+        achievement1.addToList("Реализация протоколов по приему платежей всех основных платежных системы России" +
+                " (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
+        RESUME_1.addSection(SectionType.ACHIEVEMENT, achievement1);
+
+        TextList qualifications1 = new TextList("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
+        qualifications1.addToList("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
+        qualifications1.addToList("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle,");
+        qualifications1.addToList("MySQL, SQLite, MS SQL, HSQLDB");
+        RESUME_1.addSection(SectionType.QUALIFICATIONS, qualifications1);
+
+        Information infoWrike = new Information("Wrike", "https://www.wrike.com/", "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",
+                LocalDate.of(2014, 10, 1),
+                LocalDate.of(2016, 1, 6));
+        Institution wrike1 = new Institution("Wrike", infoWrike);
+        InstitutionsList experience1 = new InstitutionsList(wrike1);
+        experience1.addToList(wrike1);
+        RESUME_1.addSection(SectionType.EXPERIENCE, experience1);
+
+        Information infoSiements = new Information("Siemens AG", "", "3 месяца обучения мобильным IN сетям (Берлин)",
+                LocalDate.of(2005, 1, 15),
+                LocalDate.of(2005, 4, 17));
+        Institution siemens_ag1 = new Institution("Siemens AG", infoSiements);
+        InstitutionsList education1 = new InstitutionsList(siemens_ag1);
+        education1.addToList(siemens_ag1);
+        RESUME_1.addSection(SectionType.EDUCATION, education1);
+
+
+
+        /**
+         *
+         */
+        RESUME_3.addContact(Contacts.ADDRESS, "СПб, проспект Ленина, дом 15, кв 2");
+        RESUME_3.addContact(Contacts.EMAIL, "drtdrt@gmail.com");
+        RESUME_3.addContact(Contacts.TELEPHONE, "+8989989898");
+        RESUME_3.addContact(Contacts.SKYPE, "Panov_qwerty");
+
+        SimpleText objective3 = new SimpleText("Ведущий стажировок и корпоративного обучения по Python Web и Enterprise технологиям");
+        RESUME_3.addSection(SectionType.OBJECTIVE, objective3);
+
+        SimpleText personal3 = new SimpleText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        RESUME_3.addSection(SectionType.PERSONAL, personal3);
+
+        TextList achievement3 = new TextList("Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP." +
+                " Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery." +
+                " Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.");
+        achievement3.addToList("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов (SOA-base архитектура, JAX-WS, JMS, AS Glassfish)." +
+                " Сбор статистики сервисов и информации о состоянии через систему мониторинга Nagios." +
+                " Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
+        RESUME_3.addSection(SectionType.ACHIEVEMENT, achievement3);
+
+        TextList qualifications3 = new TextList("Python: Django.");
+        qualifications3.addToList("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
+        qualifications3.addToList("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy,");
+        qualifications3.addToList("проектрирования, архитектурных шаблонов, UML, функционального");
+        RESUME_3.addSection(SectionType.QUALIFICATIONS, qualifications3);
+
+        Information infoYota = new Information("Yota", "https://www.yota.ru/", "Ведущий специалист", "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\"" +
+                " (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2)." +
+                " Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)",
+                LocalDate.of(2008, 6, 1),
+                LocalDate.of(2010, 12, 1));
+        Institution yota = new Institution("Yota", infoYota);
+        Information infoEnkata = new Information("Enkata","http://enkata.com/", "Разработчик ПО","Реализация клиентской (Eclipse RCP)" +
+                " и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS)" +
+                " частей кластерного J2EE приложения (OLAP, Data mining).",
+                LocalDate.of(2007, 3, 1),
+                LocalDate.of(208, 6, 1)  );
+        Institution enkata = new Institution("Enkata", infoEnkata);
+
+        InstitutionsList experience3 = new InstitutionsList(yota);
+        experience3.addToList(yota);
+        experience3.addToList(enkata);
+        RESUME_3.addSection(SectionType.EXPERIENCE, experience3);
+
+
+        Information infoAlcatel = new Information("6 месяцев обучения цифровым телефонным сетям (Москва)",
+                LocalDate.of(2005, 1, 15),
+                LocalDate.of(2005, 4, 17));
+        Institution alcatel = new Institution("Alcatel", infoAlcatel);
+        InstitutionsList education3 = new InstitutionsList(alcatel);
+        education3.addToList(alcatel);
+        RESUME_3.addSection(SectionType.EDUCATION, education3);
+/**
+ *
+ */
+        RESUME_3.addContact(Contacts.ADDRESS, "СПб, проспект Стачек, дом 115, кв 36");
+        RESUME_3.addContact(Contacts.EMAIL, "erterte@gmail.com");
+        RESUME_3.addContact(Contacts.TELEPHONE, "+989898988777774");
+        RESUME_3.addContact(Contacts.SKYPE, "Panov_qwerty");
+
+        Information infoUniversity1 = new Information("Аспирантура (программист С, С++)",
+                LocalDate.of(1993, 1, 15),
+                LocalDate.of(1996, 4, 17));
+        Institution spbTI1 = new Institution("SPBTI", infoUniversity1);
+
+        Information infoUniversity2 = new Information("Инженер (программист Fortran, C)",
+                LocalDate.of(1987, 3, 15),
+                LocalDate.of(1993, 7, 17));
+        Institution spbTI2 = new Institution("SPBTI", infoUniversity2);
+        InstitutionsList education4 = new InstitutionsList(spbTI1);
+        education4.addToList(spbTI2);
+        RESUME_3.addSection(SectionType.EDUCATION, education3);
+
+
+
         storage.save(RESUME_1);
         storage.save(RESUME_3);
         storage.save(RESUME_2);

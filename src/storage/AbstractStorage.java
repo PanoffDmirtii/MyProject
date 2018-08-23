@@ -7,14 +7,14 @@ import model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<T> implements Storage {
     protected abstract List<Resume> getAll();
-    protected abstract boolean isExist(Object key);
-    protected abstract void saveResume(Object key, Resume resume);
-    protected abstract void updateResume(Object key, Resume resume);
-    protected abstract Object getKey(String uuid);
-    protected abstract void deleteResume(Object key);
-    protected abstract Resume getResume(Object key);
+    protected abstract boolean isExist(T key);
+    protected abstract void saveResume(T key, Resume resume);
+    protected abstract void updateResume(T key, Resume resume);
+    protected abstract T getKey(String uuid);
+    protected abstract void deleteResume(T key);
+    protected abstract Resume getResume(T key);
 
     @Override
     public void save(Resume resume) {
@@ -48,16 +48,16 @@ public abstract class AbstractStorage implements Storage {
         return resumes;
     }
 
-    private Object getKeyIfExist(String uuid) {
-        Object key = getKey(uuid);
+    private T getKeyIfExist(String uuid) {
+        T key = getKey(uuid);
         if (isExist(key)){
             return key;
         }
         throw new NotExistUuidException(uuid);
     }
 
-    private Object getKeyIfNotExist(String uuid){
-        Object key = getKey(uuid);
+    private T getKeyIfNotExist(String uuid){
+        T key = getKey(uuid);
         if (!isExist(key) ){
             return key;
         }

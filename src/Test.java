@@ -45,23 +45,36 @@ public class Test {
 
         resume.addSection(SectionType.QUALIFICATIONS, qualifications);
 
-        Institution wrike = new Institution("Wrike", "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.",
-                LocalDate.of(2014, 10, 1),
-                LocalDate.of(2016, 1, 6));
-        wrike.setPosition("Старший разработчик (backend)");
+        Information info1 = new Information("Wrike", "https://www.wrike.com/","Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
+                " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.", LocalDate.of(2014, 10, 1), LocalDate.of(2016,1,1));
+        Institution wrike = new Institution("Wrike", info1);
         InstitutionsList experience = new InstitutionsList(wrike);
         experience.addToList(wrike);
 
         resume.addSection(SectionType.EXPERIENCE, experience);
 
-        Institution siemens_ag = new Institution("Siemens AG", "3 месяца обучения мобильным IN сетям (Берлин)",
+        Information info2 = new Information("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
+                "3 месяца обучения мобильным IN сетям (Берлин)",
                 LocalDate.of(2005, 1, 15),
                 LocalDate.of(2005, 4, 17));
+        Institution siemens_ag = new Institution("Siements_AG", info2);
         InstitutionsList education = new InstitutionsList(siemens_ag);
         education.addToList(siemens_ag);
 
-        resume.addSection(SectionType.EDUCATION, education);
+        // University ======================================================================================================================
+        Information infoUniversity1 = new Information("Аспирантура (программист С, С++)",
+                LocalDate.of(1993, 1, 15),
+                LocalDate.of(1996, 4, 17));
+        Institution spbTI1 = new Institution("SPBTI", infoUniversity1);
+
+        Information infoUniversity2 = new Information("Инженер (программист Fortran, C)",
+                LocalDate.of(1987, 3, 15),
+                LocalDate.of(1993, 7, 17));
+        Institution spbTI2 = new Institution("SPBTI", infoUniversity2);
+        InstitutionsList education4 = new InstitutionsList(spbTI1);
+        education4.addToList(spbTI2);
+
+        resume.addSection(SectionType.EDUCATION, education4);
 
         printResumeToConsole(resume);
     }

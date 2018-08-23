@@ -15,6 +15,19 @@ public class SimpleText extends Content {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleText text1 = (SimpleText) o;
+        return Objects.equals(text, text1.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text);
+    }
+
+    @Override
     public String toString() {
         return text + "\n";
     }

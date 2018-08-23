@@ -1,39 +1,50 @@
 package model;
 
-import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Institution {
     private String institution;
-    private String webSite;
-    private String position;
-    private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private List<Information> infoList = new ArrayList<>();
 
-    public Institution(String institution, String description, LocalDate startDate, LocalDate endDate) {
+    public Institution(String institution, Information info) {
         Objects.requireNonNull(institution, "Text must be not empty");
-        Objects.requireNonNull(description, "Text must be not empty");
+        Objects.requireNonNull(info, "not be null");
         this.institution = institution;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        infoList.add(info);
     }
 
-    public void setWebSite(String webSite){
-        this.webSite = webSite;
+    public void addInformation(Information i){
+        infoList.add(i);
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public List<Information> getInfoList() {
+        return infoList;
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Institution that = (Institution) o;
+        return Objects.equals(institution, that.institution) &&
+                Objects.equals(infoList, that.infoList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(institution, infoList);
     }
 
     @Override
     public String toString() {
-        return "Institution: " + institution + "\n"
-                + "WebSite: " + webSite + "\n"
-                + "Data: " + startDate + " - "  + endDate + "\n"
-                + "Position: " + position + "\n"
-                + "Description: " + description;
+        return institution + ":" + "\n"
+                + infoList + "\n";
     }
 }

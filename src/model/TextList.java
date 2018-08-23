@@ -20,6 +20,19 @@ public class TextList extends Content {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TextList textList = (TextList) o;
+        return Objects.equals(listOfContent, textList.listOfContent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(listOfContent);
+    }
+
+    @Override
     public String toString() {
         return listOfContent.toString() + "\n";
     }
