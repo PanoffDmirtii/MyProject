@@ -12,19 +12,12 @@ public class InstitutionsList extends Content {
     private List<Institution> institutionsList;
 
     public InstitutionsList(List<Institution> institutionsList) {
+        Objects.requireNonNull(institutionsList, "Must be not Null");
         this.institutionsList = institutionsList;
     }
 
     public List<Institution> getInstitutionsList() {
         return institutionsList;
-    }
-
-    public void addInstitution(Institution institution){
-        for (Institution element : institutionsList) {
-            if (element.equals(institution)){
-                element.getInfoList().addAll(institution.getInfoList());
-            }
-        }
     }
 
     @Override

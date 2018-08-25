@@ -13,7 +13,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected File directory;
 
     protected abstract void write(Resume resume, File file) throws IOException;
-
     protected abstract Resume read(File file) throws IOException;
 
     public AbstractFileStorage(File directory) {
@@ -30,12 +29,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> list = new ArrayList<>();
-        try {
+        if (directory.listFiles() != null) {
             for (File file : directory.listFiles()) {
                 list.add(getResume(file));
             }
-        } catch (Exception e) {
-            throw new StorageException("IO Exeption", directory.getName(), e);
+        } else {
+            throw new StorageException("IO Exeption", directory.getName());
         }
         return list;
     }
@@ -54,7 +53,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new StorageException("IO Exeption", file.getName(), e);
         }
     }
-
 
     @Override
     protected void updateResume(File file, Resume resume) {
@@ -90,24 +88,22 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        try {
+        if (directory.listFiles() != null){
             for (File file : directory.listFiles()) {
                 deleteResume(file);
             }
-        } catch (Exception e){
-            throw new StorageException("IO Exeption", directory.getName(), e);
+        } else {
+            throw new StorageException("IO Exeption", directory.getName());
         }
-
     }
 
     @Override
     public int size() {
         int count = 0;
-        try {
-            File[] files = directory.listFiles();
-            count = files.length;
-        } catch (Exception e){
-            throw new StorageException("IO Exeption", directory.getName(), e);
+        if (directory.listFiles() != null){
+            count = directory.listFiles().length;
+        } else {
+            throw new StorageException("IO Exeption", directory.getName());
         }
         return  count;
     }

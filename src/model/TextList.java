@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,32 +7,28 @@ import java.util.Objects;
  * Class for sections ACHIEVEMENT("Достижения"), QUALIFICATIONS("Квалификация"),
  */
 public class TextList extends Content {
-    private List<String> listOfContent = new ArrayList<>();
+    private List<String> textList;
 
-    public TextList(String text) {
-        Objects.requireNonNull(text, "Text must be not empty");
-        listOfContent.add(text);
-    }
-
-    public void addToList(String content){
-        listOfContent.add(content);
+    public TextList(List<String> textList) {
+        Objects.requireNonNull(textList, "Text must be not empty");
+        this.textList = textList;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TextList textList = (TextList) o;
-        return Objects.equals(listOfContent, textList.listOfContent);
+        TextList textList1 = (TextList) o;
+        return Objects.equals(textList, textList1.textList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listOfContent);
+        return Objects.hash(textList);
     }
 
     @Override
     public String toString() {
-        return listOfContent.toString() + "\n";
+        return textList + " ";
     }
 }
