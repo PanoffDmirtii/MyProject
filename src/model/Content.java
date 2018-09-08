@@ -1,4 +1,6 @@
 package model;
 
-public abstract class Content {
+import java.io.Serializable;
+
+public abstract class Content implements Serializable {
 }

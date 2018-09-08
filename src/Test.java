@@ -1,5 +1,8 @@
 import model.*;
+import storage.ChooseStrategy;
+import storage.ObjectStreamStorage;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
@@ -16,7 +19,7 @@ public class Test {
         }
     }
     public static void main(String[] args) {
-        Resume resume1 = new Resume("Пупкин");
+        Resume resume1 = new Resume("id_1", "Пупкин");
         resume1.addContact(Contacts.ADDRESS, "СПб, Невский проспект, дом 10, кв 7");
         resume1.addContact(Contacts.EMAIL, "qwerty@gmail.com");
         resume1.addContact(Contacts.TELEPHONE, "+79213079075");
@@ -62,7 +65,7 @@ public class Test {
          * 
          */
         
-        Resume resume2 = new Resume("Олег");
+        Resume resume2 = new Resume("id_2", "Олег");
         resume2.addContact(Contacts.ADDRESS, "СПб, Ленинский проспект, дом 110, кв 57");
         resume2.addContact(Contacts.EMAIL, "gdsrgdrg@gmail.com");
         resume2.addContact(Contacts.TELEPHONE, "+78989989");
@@ -113,7 +116,7 @@ public class Test {
          *
          */
 
-        Resume resume3 = new Resume("Витя");
+        Resume resume3 = new Resume("id_3","Витя");
         resume3.addContact(Contacts.ADDRESS, "СПб, Проспект Большивиков, дом 50, кв 20");
         resume3.addContact(Contacts.EMAIL, "fererere@gmail.com");
         resume3.addContact(Contacts.TELEPHONE, "+8454343435435");
@@ -161,9 +164,14 @@ public class Test {
                                 LocalDate.of(2011, 3, 1),
                                 LocalDate.of(2011, 4, 1)))))));
 
-        printResumeToConsole(resume1);
-        printResumeToConsole(resume2);
-        printResumeToConsole(resume3);
+
+
+//        ObjectStreamStorage ob = new ObjectStreamStorage(new File("C:\\Users\\XS\\basejava\\storage_resume"));
+//        ob.save(resume1);
+//        ob.save(resume2);
+
+        ChooseStrategy st1 = new ChooseStrategy(new ObjectStreamStorage(new File("C:\\Users\\XS\\basejava\\storage_resume")));
+
 
     }
 }

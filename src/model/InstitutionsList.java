@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 
 public class InstitutionsList extends Content {
+    private static final long serialVersionUID = 1L;
     private List<Institution> institutionsList;
 
     public InstitutionsList(List<Institution> institutionsList) {

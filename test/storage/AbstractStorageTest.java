@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,6 +18,8 @@ import java.util.List;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
+    protected static final File DIR_STORAGE_RESUME = new File("C:\\Users\\XS\\basejava\\storage_resume");
+    protected static final Path PATH_STORAGE_RESUME = Paths.get(DIR_STORAGE_RESUME.getAbsolutePath());
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -28,12 +33,9 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_2 = new Resume(UUID_2, "Nikolay Aprelev");
     private static final Resume RESUME_3 = new Resume(UUID_3, "Dmitrii Panov");
     private static final Resume RESUME_3_UPDATE = new Resume(UUID_3, "Puzanova Irina");
-    protected static final Resume RESUME_4 = new Resume(UUID_4,"Evgenii Pupkin");
+    protected static final Resume RESUME_4 = new Resume(UUID_4, "Evgenii Pupkin");
 
-
-
-    @Before
-    public void setUp() {
+    {
         RESUME_1.addContact(Contacts.ADDRESS, "СПб, Невский проспект, дом 10, кв 7");
         RESUME_1.addContact(Contacts.EMAIL, "qwerty@gmail.com");
         RESUME_1.addContact(Contacts.TELEPHONE, "+8768743543");
@@ -170,8 +172,11 @@ public abstract class AbstractStorageTest {
                         new Information("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
                                 LocalDate.of(2011, 3, 1),
                                 LocalDate.of(2011, 4, 1)))))));
+    }
 
-
+    @Before
+    public void setUp() {
+        storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_3);
         storage.save(RESUME_2);

@@ -1,10 +1,12 @@
 package model;
 
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Institution {
+public class Institution implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String title;
     private Link homePage;
     private List<Information> infoList;

@@ -7,6 +7,7 @@ import java.util.Objects;
  * Class for sections ACHIEVEMENT("Достижения"), QUALIFICATIONS("Квалификация"),
  */
 public class TextList extends Content {
+    private static final long serialVersionUID = 1L;
     private List<String> textList;
 
     public TextList(List<String> textList) {
