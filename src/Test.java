@@ -1,8 +1,5 @@
 import model.*;
-import storage.ChooseStrategy;
-import storage.ObjectStreamStorage;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
@@ -166,11 +163,6 @@ public class Test {
 
 
 
-//        ObjectStreamStorage ob = new ObjectStreamStorage(new File("C:\\Users\\XS\\basejava\\storage_resume"));
-//        ob.save(resume1);
-//        ob.save(resume2);
-
-        ChooseStrategy st1 = new ChooseStrategy(new ObjectStreamStorage(new File("C:\\Users\\XS\\basejava\\storage_resume")));
 
 
     }

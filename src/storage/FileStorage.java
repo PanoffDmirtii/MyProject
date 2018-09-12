@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File>{
     protected File directory;
+    protected Strategy strategy = new ObjectStreamPathStorage();
 
-    protected abstract void write(Resume resume, OutputStream file) throws IOException;
-    protected abstract Resume read(InputStream file) throws IOException;
-
-    public AbstractFileStorage(File directory) {
+    public FileStorage(File directory) {
         Objects.requireNonNull(directory, "not null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -23,6 +21,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is npt readable/writable");
         }
         this.directory = directory;
+    }
+
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -53,7 +55,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void updateResume(File file, Resume resume) {
         try {
-            write(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            strategy.write(resume,new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO Exception", file.getName(), e);
         }
@@ -76,7 +78,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getResume(File file) {
         try {
-            return read(new BufferedInputStream(new FileInputStream(file)));
+            return strategy.read(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO Exception", file.getName(), e);
         }

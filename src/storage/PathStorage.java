@@ -11,13 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path>{
     protected Path directory;
+    protected Strategy strategy = new ObjectStreamStorage();
 
-    protected abstract void write(Resume resume, OutputStream os) throws IOException;
-    protected abstract Resume read(InputStream is) throws IOException;
-
-    public AbstractPathStorage(String dir) {
+    public PathStorage(String dir) {
         Objects.requireNonNull(dir, "not null");
         this.directory = Paths.get(dir);
         if (!Files.isDirectory(directory)) {
@@ -26,6 +24,10 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         if (!Files.isReadable(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(directory.getFileName() + " is npt readable/writable");
         }
+    }
+
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -57,7 +59,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Path path, Resume resume) {
         try {
-            write(resume,new BufferedOutputStream(new FileOutputStream(path.toString())));
+            strategy.write(resume,new BufferedOutputStream(new FileOutputStream(path.toString())));
         } catch (IOException e) {
             throw new StorageException("IO Exeption", path.getFileName().toString(), e);
         }
@@ -81,7 +83,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getResume(Path path) {
         try {
-            return read(new BufferedInputStream(new FileInputStream(path.toString())));
+            return strategy.read(new BufferedInputStream(new FileInputStream(path.toString())));
         } catch (IOException e) {
             throw new StorageException("Resume not found", path.getFileName().toString(), e);
         }
