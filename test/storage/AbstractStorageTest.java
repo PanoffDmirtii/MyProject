@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -235,7 +236,11 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> sortedResume = Arrays.asList(RESUME_1,RESUME_2,RESUME_3);
         Collections.sort(sortedResume);
-        Assert.assertEquals(sortedResume, storage.getAllSorted());
+        try {
+            Assert.assertEquals(sortedResume, storage.getAllSorted());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,4 +1,4 @@
-package storage;
+package Strategy;
 
 import model.Resume;
 

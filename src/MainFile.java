@@ -2,7 +2,7 @@ import java.io.File;
 
 public class MainFile {
     public static void main(String[] args) {
-        File file = new File("C:\\Users\\XS\\basejava\\src");
+        File file = new File("C:\\Users\\XS\\basejava");
         toDirectory(file, "");
     }
 
@@ -14,7 +14,6 @@ public class MainFile {
                 System.out.println("Directory: " + point + element);
                 toDirectory(element, point);
             }
-            System.out.println("File: " + point + element);
         }
     }
 }

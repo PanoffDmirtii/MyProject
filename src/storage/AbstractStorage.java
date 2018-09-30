@@ -4,11 +4,12 @@ import exceptions.ExistUuidException;
 import exceptions.NotExistUuidException;
 import model.Resume;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorage<T> implements Storage {
-    protected abstract List<Resume> getAll();
+    protected abstract List<Resume> getAll() throws IOException;
     protected abstract boolean isExist(T key);
     protected abstract void saveResume(T key, Resume resume);
     protected abstract void updateResume(T key, Resume resume);
@@ -41,8 +42,13 @@ public abstract class AbstractStorage<T> implements Storage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = getAll();
+    public List<Resume> getAllSorted(){
+        List<Resume> resumes = null;
+        try {
+            resumes = getAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Collections.sort(resumes);
         System.out.println("Return sorted list resumes: " + resumes);
         return resumes;

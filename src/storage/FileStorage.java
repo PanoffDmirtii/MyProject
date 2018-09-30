@@ -1,5 +1,7 @@
 package storage;
 
+import Strategy.Strategy;
+import Strategy.WorkWithFiles;
 import exceptions.StorageException;
 import model.Resume;
 
@@ -10,7 +12,7 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File>{
     protected File directory;
-    protected Strategy strategy = new ObjectStreamPathStorage();
+    protected Strategy strategy;
 
     public FileStorage(File directory) {
         Objects.requireNonNull(directory, "not null");
@@ -21,6 +23,7 @@ public class FileStorage extends AbstractStorage<File>{
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is npt readable/writable");
         }
         this.directory = directory;
+        this.strategy = new WorkWithFiles();
     }
 
     public void setStrategy(Strategy strategy) {
@@ -31,7 +34,7 @@ public class FileStorage extends AbstractStorage<File>{
     protected List<Resume> getAll() {
         List<Resume> list = new ArrayList<>();
         checkDirectory(directory);
-        for (File file : directory.listFiles()) {
+        for (File file : checkDirectory(directory)) {
             list.add(getResume(file));
         }
         return list;
@@ -86,21 +89,21 @@ public class FileStorage extends AbstractStorage<File>{
 
     @Override
     public void clear() {
-        checkDirectory(directory);
-        for (File file : directory.listFiles()) {
+        //checkDirectory(directory);
+        for (File file : checkDirectory(directory)) {
             deleteResume(file);
         }
     }
 
     @Override
     public int size() {
-        checkDirectory(directory);
-        return  directory.listFiles().length;
+        return checkDirectory(directory).length;
+        //return  directory.listFiles().length;
     }
 
-    private boolean checkDirectory (File directory){
+    private File[] checkDirectory (File directory){
         if (directory != null){
-            return true;
+            return directory.listFiles();
         } else {
             throw new StorageException("IO Exception", directory.getName());
         }
